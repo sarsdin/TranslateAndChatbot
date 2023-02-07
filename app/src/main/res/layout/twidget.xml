@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.Tappcli.AppWidget.Container"
+    android:theme="@style/Theme.Tappcli.AppWidgetContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<!--    <TextView-->
+<!--        android:id="@+id/appwidget_text"-->
+<!--        style="@style/Widget.Tappcli.AppWidget.InnerView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:layout_marginBottom="8dp"-->
+<!--        android:contentDescription="@string/appwidget_text"-->
+<!--        android:text="@string/appwidget_text"-->
+<!--        android:textColor="#BF1A1A"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textStyle="bold|italic" />-->
+
+    <ImageButton
+        android:id="@+id/image_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/heart" />
+</RelativeLayout>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="blue_color_picker">#0066FF</color>
+    <color name="brown_color_picker">#AF593E</color>
+    <color name="green_color_picker">#01A368</color>
+    <color name="orange_color_picker">#FF861F</color>
+    <color name="red_color_picker">#ED0A3F</color>
+    <color name="red_orange_color_picker">#FF3F34</color>
+    <color name="sky_blue_color_picker">#76D7EA</color>
+    <color name="violet_color_picker">#8359A3</color>
+    <color name="yellow_color_picker">#FBE870</color>
+    <color name="yellow_green_color_picker">#C5E17A</color>
+    <color name="tool_bg">#151414</color>
+    <color name="semi_black_transparent">#99000000</color>
+
+    <color name="colorDivider">#CDCDCD</color>
+    <color name="colorDivider2">#ECECEC</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorRed">#FF5252</color>
+    <color name="colorRed2">#B71C1C</color>
+    <color name="colorBlue">#2196F3</color>
+    <color name="colorBlue2">#1976D2</color>
+    <color name="colorBlueGray">#F3F7F8</color>
+    <color name="colorDarkSemiTransparent">#C6000000</color>
+    <color name="colorLike_green">#4CAF50</color>
+    <color name="colorInvite_green">#43A047</color>
+    <color name="colorLike_gray">#AAAAAA</color>
+    <color name="color_transparent">#00009688</color>
+    <color name="color_green2">#03B399</color>
+    <color name="color_gray2">#9A9A9A</color>
+
+
+
+
+
+
+    <color name="colorPrimary">#F86562</color>
+    <color name="colorPrimaryVariant">#E57373</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+
+    <!-- Secondary brand color. -->
+    <color name="colorSecondary">#E57373</color>
+    <color name="colorSecondaryVariant">#EF5350</color>
+    <color name="colorOnSecondary">#EF5350</color>
+
+    <color name="statusBarColor">#C8C8C8</color>
+    <color name="toolbarTitleColor">#434343</color>
+
+    <color name="activityBackground">#F6F6F6</color>
+
+    <!-- Dialog -->
+    <color name="dialogTitle">#1C1C1C</color>
+    <color name="dialogContent">#717171</color>
+    <color name="snackbarBackground">#FAFAFA</color>
+    <color name="snackbarTextColor">#363636</color>
+
+    <!-- Review Activity -->
+    <color name="reviewActivityBackground">#F3F3F3</color>
+    <color name="reviewActivityParkingLotNameText">#2B2B2B</color>
+    <color name="reviewActivityTitleIcon">#707070</color>
+    <color name="TitleTextColor">#121212</color>
+    <color name="minorDescTextColor">#858585</color>
+    <color name="majorDescTextColor">#656565</color>
+    <color name="reviewActivityJibunBackgroundStroke">#CDCDCD</color>
+    <color name="reviewActivityMapIcon">#5A5A5A</color>
+    <color name="reviewActivityCallIcon">#3C3C3C</color>
+    <color name="coronaWarningBackground">#CECECE</color>
+    <color name="coronaWarningIconTextColor">#595959</color>
+    <color name="reviewCountTextColor">#A1A1A1</color>
+    <color name="noReviewBackground">#FAFAFA</color>
+    <color name="noReviewTextColor">#3C3C3C</color>
+
+    <!--Main Activity-->
+    <color name="locationFabUnActive">#434343</color>
+    <color name="locationFabActive">@color/colorPrimary</color>
+    <color name="mainSearchBarText">#8E8E8E</color>
+    <color name="mainVoiceIconColor">#333333</color>
+
+    <!-- Marker color -->
+    <color name="markerPayBackround">@color/colorPrimary</color>
+    <color name="markerFreeBackround">#42A5F5</color>
+    <color name="markerStrokeColor">#3A3A3A</color>
+    <color name="markerIconTextColor">#232323</color>
+    <color name="markerFeeTextColor">#ffffff</color>
+
+    <!-- Search Activity -->
+    <color name="searchBarItemColor">#323232</color>
+    <color name="searchBarHintColor">#B1B1B1</color>
+    <color name="searchBarItemDeleteIcon">#838383</color>
+    <color name="searchBarHintHighlight">@color/colorPrimary</color>
+
+    <!-- Voice dialog -->
+    <color name="subtitleBackground">#EEEEEE</color>
+    <color name="subtitleTextColor">#7A7A7A</color>
+
+    <!--Navigation-->
+    <color name="inquireButtonBackground">#F37474</color>
+
+    <!-- Circle Image View  -->
+    <color name="circleImageViewBorderColor">#CDCDCD</color>
+    <!-- Divider background -->
+    <color name="dividerColor">#CDCDCD</color>
+
+    <!-- Review Write Activity -->
+    <color name="unselectedRateColor">#CDCDCD</color>
+    <color name="selectedRateColor">@color/colorPrimary</color>
+    <color name="photoFrameStrokeColor">#33535353</color>
+
+    <!-- All Review Activity -->
+    <color name="allReviewBackground">#EDEDED</color>
+    <color name="unselectedTabTextColor">#B1B1B1</color>
+    <color name="selectedTabTextColor">@color/colorPrimary</color>
+    <color name="unpressedProposalPhotoColor">@color/colorPrimary</color>
+    <color name="pressedProposalPhotoColor">#E16C68</color>
+    <color name="selectedOptionColor">@color/colorPrimary</color>
+    <color name="unselectedOptionColor">#FFF7F7</color>
+    <color name="proposalOptionIconColor">#727272</color>
+    <color name="proposalContentEditTextColor">#F8F8F8</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+
+
+</resources>

@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tappcli.MainActivity">
+    <item
+        android:id="@+id/chatBotFm"
+        android:icon="@drawable/ic_baseline_chat_bubble_outline_24"
+        android:title="챗봇"
+        android:checkable="true"
+        app:showAsAction="ifRoom"
+        />
+<!--    <item-->
+<!--        android:id="@+id/menu_item2"-->
+<!--        android:icon="@drawable/ic_baseline_settings_24"-->
+<!--        android:title="아이템2"-->
+<!--        android:checkable="true"-->
+<!--        app:showAsAction="ifRoom"-->
+<!--        />-->
+<!--    <item-->
+<!--        android:id="@+id/menu_item3"-->
+<!--        android:icon="@drawable/ic_baseline_cloud_24"-->
+<!--        android:title="아이템3"-->
+<!--        android:checkable="true"-->
+<!--        app:showAsAction="ifRoom"-->
+<!--        />-->
+</menu>
