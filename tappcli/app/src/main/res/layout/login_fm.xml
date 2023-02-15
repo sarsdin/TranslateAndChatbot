@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.LoginFm"
+    >
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#00FFFFFF"
+        app:elevation="1dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            >
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/toolbar_slide"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_gravity="start"
+                android:layout_marginEnd="15dp"
+                android:background="#FFFFFF"
+                android:clickable="true"
+                android:contentDescription="이미지 입니다."
+                android:scaleType="centerCrop"
+                android:tint="#515151"
+                app:layout_collapseMode="pin"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_10"
+                app:tintMode="src_in" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/toolbar_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="로그인"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <!--            <com.google.android.material.imageview.ShapeableImageView-->
+            <!--                android:id="@+id/toolbar_iv"-->
+            <!--                android:layout_width="20dp"-->
+            <!--                android:layout_height="20dp"-->
+            <!--                android:layout_marginEnd="15dp"-->
+            <!--                android:layout_gravity="end"-->
+            <!--                android:contentDescription="이미지 입니다."-->
+            <!--                android:scaleType="centerCrop"-->
+            <!--                android:background="#818080"-->
+            <!--                android:visibility="gone"-->
+            <!--                app:tintMode="screen"-->
+            <!--                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"-->
+            <!--                app:srcCompat="@drawable/ic_baseline_person_24"-->
+            <!--                app:layout_collapseMode="pin"  />-->
+
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/toolbar_add_bt"-->
+            <!--                style="@style/Widget.Material3.Button.OutlinedButton"-->
+            <!--                android:layout_width="50dp"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:layout_gravity="end"-->
+            <!--                android:layout_marginEnd="16dp"-->
+            <!--                android:padding="5dp"-->
+            <!--                android:text="만들기"-->
+            <!--                android:textColor="#171717"-->
+            <!--                android:textSize="14sp"-->
+            <!--                android:visibility="gone"-->
+            <!--                app:strokeColor="#9A9A9A"-->
+            <!--                tools:visibility="visible" />-->
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="50dp"
+        >
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/search_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#48FB6C6C"
+            android:visibility="gone"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:autofillHints="검색"
+                android:background="@color/colorBlueGray"
+                app:defaultQueryHint="검색"
+                app:iconifiedByDefault="false"
+                app:queryBackground="@null"
+                app:queryHint="검색" />
+            <!--                android:focusableInTouchMode="true"-->
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/chat_list"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:layoutManager="LinearLayoutManager"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/search_card"-->
+<!--            tools:context=".chbot.ChatBotFm"-->
+<!--            tools:listitem="@layout/chatbot_fm_vh"-->
+<!--            />-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_main_email_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:hint="이메일"
+            app:boxBackgroundMode="outline"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.128">
+            <!--        app:counterEnabled="true"-->
+            <!--        app:counterMaxLength="40"-->
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_main_email_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_main_pwd_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:hint="비밀번호"
+            app:boxBackgroundMode="outline"
+            app:errorEnabled="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_main_email_layout"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_main_pwd_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/login_autologin_ckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:text="자동로그인"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/login_findpw_bt"
+            app:layout_constraintHorizontal_bias="0.52"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_main_pwd_layout" />
+
+        <Button
+            android:id="@+id/login_findpw_bt"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="210dp"
+            android:text="비밀번호 찾기"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.62"
+            app:layout_constraintStart_toEndOf="@+id/login_autologin_ckbox"
+            app:layout_constraintTop_toBottomOf="@+id/login_main_pwd_layout" />
+
+        <Button
+            android:id="@+id/login_login_bt"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginRight="40dp"
+            android:backgroundTint="#C8E6C9"
+            android:text="로그인"
+            android:textSize="20sp"
+            android:enabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.45"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_main_pwd_layout" />
+
+        <Button
+            android:id="@+id/login_join_bt"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="100dp"
+            android:text="회원가입 하기"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_login_bt" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

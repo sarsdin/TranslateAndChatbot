@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/r_layout"
+    style="@style/Widget.Tappcli.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="#FAFFFF"
+    android:theme="@style/Theme.Tappcli.AppWidgetContainer">
+
+    <!--        style="@style/Widget.Tappcli.AppWidget.InnerView"-->
+    <ImageButton
+        android:id="@+id/image_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerInParent="false"
+        android:layout_centerVertical="true"
+        android:backgroundTint="#E0F2F1"
+        android:scaleType="fitXY"
+        android:src="@drawable/translate" />
+
+    <TextView
+        android:id="@+id/appwidget_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="17dp"
+        android:layout_toEndOf="@+id/image_button"
+        android:contentDescription="@string/appwidget_text"
+        android:text="번역 입력"
+        android:textColor="#009688"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

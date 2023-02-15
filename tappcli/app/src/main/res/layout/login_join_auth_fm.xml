@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.JoinAuthFm"
+    >
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#00FFFFFF"
+        app:elevation="1dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            >
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/toolbar_slide"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_gravity="start"
+                android:layout_marginEnd="15dp"
+                android:background="#FFFFFF"
+                android:clickable="true"
+                android:contentDescription="이미지 입니다."
+                android:scaleType="centerCrop"
+                android:tint="#515151"
+                app:layout_collapseMode="pin"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_10"
+                app:tintMode="src_in" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/toolbar_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="인증"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <!--            <com.google.android.material.imageview.ShapeableImageView-->
+            <!--                android:id="@+id/toolbar_iv"-->
+            <!--                android:layout_width="20dp"-->
+            <!--                android:layout_height="20dp"-->
+            <!--                android:layout_marginEnd="15dp"-->
+            <!--                android:layout_gravity="end"-->
+            <!--                android:contentDescription="이미지 입니다."-->
+            <!--                android:scaleType="centerCrop"-->
+            <!--                android:background="#818080"-->
+            <!--                android:visibility="gone"-->
+            <!--                app:tintMode="screen"-->
+            <!--                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"-->
+            <!--                app:srcCompat="@drawable/ic_baseline_person_24"-->
+            <!--                app:layout_collapseMode="pin"  />-->
+
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/toolbar_add_bt"-->
+            <!--                style="@style/Widget.Material3.Button.OutlinedButton"-->
+            <!--                android:layout_width="50dp"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:layout_gravity="end"-->
+            <!--                android:layout_marginEnd="16dp"-->
+            <!--                android:padding="5dp"-->
+            <!--                android:text="만들기"-->
+            <!--                android:textColor="#171717"-->
+            <!--                android:textSize="14sp"-->
+            <!--                android:visibility="gone"-->
+            <!--                app:strokeColor="#9A9A9A"-->
+            <!--                tools:visibility="visible" />-->
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginEnd="40dp"
+            android:fontFamily="cursive"
+            android:text="휴대폰 인증"
+            android:textColor="#252525"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.05" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            android:text="본인 확인 및 중복 가입 방지 절차입니다.\n휴대폰 번호를 입력해주세요."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/join_phone_textlayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="40dp"
+            android:hint="휴대폰 번호를 입력해주세요"
+            app:boxBackgroundMode="outline"
+            app:errorEnabled="true"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv2">
+            <!--        app:hintTextColor="@color/teal_200"-->
+            <!--        app:counterEnabled="true"-->
+            <!--        app:counterMaxLength="40"-->
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/join_phone_number_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/join_phone_confirm_textlayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="230dp"
+            android:enabled="false"
+            android:hint="인증번호 입력"
+            app:boxBackgroundMode="outline"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/join_phone_textlayout"
+            app:layout_constraintVertical_bias="0.002">
+            <!--        app:counterEnabled="true"-->
+            <!--        app:counterMaxLength="40"-->
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/join_phone_authcode_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/join_auth_complete_bt"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#C8E6C9"
+            android:text="인증완료"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <!--    <Button-->
+    <!--        android:id="@+id/join_phone_send_bt"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="인증번호 발송"-->
+    <!--        android:textSize="10dp"-->
+    <!--        android:enabled="false"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.85"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.16400000"-->
+    <!--        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />-->
+
+        <Button
+            android:id="@+id/join_phone_verify_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증하기"
+            android:textSize="11dp"
+            app:layout_constraintBottom_toBottomOf="@+id/timer_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.209"
+            app:layout_constraintStart_toEndOf="@+id/timer_view"
+            app:layout_constraintTop_toTopOf="@+id/timer_view"
+            app:layout_constraintVertical_bias="0.0"
+            app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="40dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="40dp" />
+
+        <com.tappcli.util.TimerView
+            android:id="@+id/timer_view"
+            android:layout_width="72dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="00:05"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@+id/join_phone_confirm_textlayout"
+            app:layout_constraintTop_toTopOf="@+id/join_phone_confirm_textlayout" />
+
+    <!--    <androidx.constraintlayout.widget.Group-->
+    <!--        android:id="@+id/join_phone_verify_group1"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:constraint_referenced_ids="join_phone_confirm_textlayout,-->
+    <!--        timer_view,-->
+    <!--        join_phone_verify_bt"-->
+    <!--        tools:visibility="visible" />-->
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

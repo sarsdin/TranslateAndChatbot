@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tr.ResultFm">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:elevation="0dp">
+        <!--        android:layout_height="?attr/actionBarSize"-->
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_collapseMode="pin"
+            app:theme="@style/ToolbarTheme.seols">
+            <!--            android:background="#00FFFFFF"-->
+            <!--                app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"-->
+            <!--                app:contentInsetStart="0dp"-->
+            <!--                app:contentInsetStartWithNavigation="0dp"-->
+
+            <ImageButton
+                android:id="@+id/back_ib"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="#FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_baseline_arrow_back_ios_new_10"
+                app:tint="#494949" />
+            <!--                android:padding="10dp"-->
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/toolbar_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="monospace"
+                android:text="한국어"
+                android:textColor="#4E4E4E"
+                android:textSize="20sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="30dp"
+                android:background="#48FB6C6C"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/change_iv"
+                    android:layout_width="48dp"
+                    android:layout_height="25dp"
+                    android:contentDescription="메인 이미지"
+                    android:scaleType="centerInside"
+                    android:tint="#8E8C8C"
+                    app:layout_collapseMode="pin"
+                    app:srcCompat="@drawable/ic_baseline_compare_arrows_24" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!--            <ImageButton-->
+            <!--                android:id="@+id/ib2"-->
+            <!--                style="@style/Widget.Material3.Button.OutlinedButton"-->
+            <!--                android:layout_width="40dp"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:layout_gravity="center_horizontal"-->
+            <!--                android:background="#FFFFFF"-->
+            <!--                android:src="@drawable/ic_baseline_compare_arrows_24" />-->
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/toolbar_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="monospace"
+                android:text="영어"
+                android:textColor="#4E4E4E"
+                android:textSize="20sp" />
+
+            <!--            <ImageButton-->
+            <!--                android:id="@+id/toolbar_write_bt"-->
+            <!--                android:layout_width="20dp"-->
+            <!--                android:layout_height="20dp"-->
+            <!--                android:layout_gravity="start"-->
+            <!--                android:layout_marginEnd="20dp"-->
+            <!--                android:background="#00818080"-->
+            <!--                app:srcCompat="@drawable/ic_baseline_sort_24"-->
+            <!--                app:tint="#636363" />-->
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/routeCaptionBottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/white">
+
+        <!-- YOUR LAYOUT GOES HERE -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="700dp">
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="1dp"
+                android:background="#4DCDCDCD"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ety"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="텍스트 입력"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:endIconDrawable="@drawable/ic_xmark"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
+                app:hintTextColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view1">
+                <!--        app:counterEnabled="true"-->
+                <!--        app:counterMaxLength="40"-->
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textNoSuggestions|textMultiLine" />
+<!--                    android:digits="'&quot;0123456789qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM"-->
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <FrameLayout
+                android:id="@+id/ivl"
+                android:layout_width="match_parent"
+                android:layout_height="153dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ety"
+                tools:visibility="visible">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_img_x"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="#E8EAF6"
+                    android:src="@drawable/ic_baseline_remove_circle_outline_24"
+                    app:fabCustomSize="30dp"
+                    app:fabSize="mini" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="153dp"
+                    android:contentDescription="ocr 이미지"
+                    android:scaleType="fitCenter"
+                    app:layout_collapseMode="pin"
+                    app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24"
+                    />
+            </FrameLayout>
+
+
+            <!--        구분선-->
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#4DCDCDCD"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivl" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView"
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="#E8EAF6"
+                    android:src="@drawable/ic_baseline_campaign_24"
+                    app:fabCustomSize="40dp"
+                    app:fabSize="auto" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginEnd="75dp"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="#E8EAF6"
+                    android:src="@drawable/ic_baseline_image_24"
+                    app:fabCustomSize="40dp"
+                    app:fabSize="auto" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/result_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="..."
+                    android:minHeight="200dp"
+                    android:paddingStart="15dp"
+                    android:paddingTop="45dp"
+                    android:text=""
+                    android:textSize="18dp" />
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!--   마이크 음성 인식 버튼 -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv3"
+                android:layout_width="60dp"
+                android:layout_height="57dp"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="#8F8F8F"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.658"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                app:strokeWidth="0dp">
+
+                <ImageButton
+                    android:id="@+id/translate_ib"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#009688"
+                    android:cropToPadding="false"
+                    android:padding="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_baseline_send_24"
+                    app:tint="#FFFFFF" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <org.quanqi.circularprogress.CircularProgressView
+                android:id="@+id/search_progress_bar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:angleAnimationDurationMillis="@integer/circular_default_angleAnimationDurationMillis"
+                app:borderWidth="@dimen/circular_default_border_width"
+                app:colorSequence="@array/circular_default_color_sequence"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.438"
+                app:sweepAnimationDurationMillis="@integer/circular_default_sweepAnimationDuration"
+                tools:visibility="gone" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv2"
+        android:layout_width="60dp"
+        android:layout_height="57dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="100dp"
+        android:visibility="visible"
+        app:cardBackgroundColor="#8F8F8F"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp">
+
+        <ImageButton
+            android:id="@+id/image_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#26A69A"
+            android:cropToPadding="false"
+            android:padding="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_mic_24"
+            app:tint="#FFFFFF" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <!--    <include-->
+    <!--        android:id="@+id/include_layout"-->
+    <!--        layout="@layout/top_sheet_fm" />-->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+

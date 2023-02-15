@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navi"
+    app:startDestination="@id/homeFm">
+
+    <fragment
+        android:id="@+id/homeFm"
+        android:name="com.tappcli.tr.HomeFm"
+        android:label=""
+        tools:layout="@layout/home_fm">
+        <action
+            android:id="@+id/action_homeFm_to_resultFm"
+            app:destination="@id/resultFm"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_homeFm_to_resultMicFm"
+            app:destination="@id/resultMicFm"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_homeFm_to_chatBotFm"
+            app:destination="@id/chatBotFm"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFm"
+        android:name="com.tappcli.tr.ResultFm"
+        android:label="result_fm"
+        tools:layout="@layout/result_fm" >
+        <action
+            android:id="@+id/action_resultFm_to_homeFm"
+            app:destination="@id/homeFm"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultMicFm"
+        android:name="com.tappcli.tr.ResultMicFm"
+        android:label="ResultMicFm"
+        tools:layout="@layout/result_fm">
+        <action
+            android:id="@+id/action_resultMicFm_to_homeFm"
+            app:destination="@id/homeFm"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatBotFm"
+        android:name="com.tappcli.chbot.ChatBotFm"
+        android:label="chatbot_fm"
+        tools:layout="@layout/chatbot_fm" >
+        <action
+            android:id="@+id/action_chatBotFm_to_homeFm"
+            app:destination="@id/homeFm"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_chatBotFm"
+        app:destination="@id/chatBotFm"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <fragment
+        android:id="@+id/loginFm"
+        android:name="com.tappcli.login.LoginFm"
+        android:label="login_fm"
+        tools:layout="@layout/login_fm" >
+        <action
+            android:id="@+id/action_loginFm_to_joinAuthFm"
+            app:destination="@id/joinAuthFm" />
+    </fragment>
+    <fragment
+        android:id="@+id/joinAuthFm"
+        android:name="com.tappcli.login.JoinAuthFm"
+        android:label="login_join_auth_fm"
+        tools:layout="@layout/login_join_auth_fm" >
+        <action
+            android:id="@+id/action_joinAuthFm_to_joinFm"
+            app:destination="@id/joinFm" />
+    </fragment>
+    <fragment
+        android:id="@+id/joinFm"
+        android:name="com.tappcli.login.JoinFm"
+        android:label="login_join_fm"
+        tools:layout="@layout/login_join_fm" />
+    <action
+        android:id="@+id/action_global_loginFm"
+        app:destination="@id/loginFm"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim" /><action android:id="@+id/action_global_homeFm" app:destination="@id/homeFm"/>
+</navigation>
