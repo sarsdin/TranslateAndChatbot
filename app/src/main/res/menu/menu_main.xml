@@ -9,13 +9,13 @@
         android:checkable="true"
         app:showAsAction="ifRoom"
         />
-<!--    <item-->
-<!--        android:id="@+id/menu_item2"-->
-<!--        android:icon="@drawable/ic_baseline_settings_24"-->
-<!--        android:title="아이템2"-->
-<!--        android:checkable="true"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        />-->
+    <item
+        android:id="@+id/loginFm"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="로그인"
+        android:checkable="true"
+        app:showAsAction="ifRoom"
+        />
 <!--    <item-->
 <!--        android:id="@+id/menu_item3"-->
 <!--        android:icon="@drawable/ic_baseline_cloud_24"-->

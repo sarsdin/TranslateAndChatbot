@@ -33,7 +33,7 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_baseline_arrow_back_ios_new_10"
                 app:tint="#494949" />
-<!--                android:padding="10dp"-->
+            <!--                android:padding="10dp"-->
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/toolbar_tv"
@@ -67,14 +67,14 @@
                     app:srcCompat="@drawable/ic_baseline_compare_arrows_24" />
             </com.google.android.material.card.MaterialCardView>
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/ib2"-->
-<!--                style="@style/Widget.Material3.Button.OutlinedButton"-->
-<!--                android:layout_width="40dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:layout_gravity="center_horizontal"-->
-<!--                android:background="#FFFFFF"-->
-<!--                android:src="@drawable/ic_baseline_compare_arrows_24" />-->
+            <!--            <ImageButton-->
+            <!--                android:id="@+id/ib2"-->
+            <!--                style="@style/Widget.Material3.Button.OutlinedButton"-->
+            <!--                android:layout_width="40dp"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:layout_gravity="center_horizontal"-->
+            <!--                android:background="#FFFFFF"-->
+            <!--                android:src="@drawable/ic_baseline_compare_arrows_24" />-->
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/toolbar_tv2"
@@ -147,7 +147,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textNoSuggestions|textMultiLine" />
+<!--                    android:digits="'&quot;0123456789qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM"-->
             </com.google.android.material.textfield.TextInputLayout>
+
+            <FrameLayout
+                android:id="@+id/ivl"
+                android:layout_width="match_parent"
+                android:layout_height="153dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ety"
+                tools:visibility="visible">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_img_x"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="#E8EAF6"
+                    android:src="@drawable/ic_baseline_remove_circle_outline_24"
+                    app:fabCustomSize="30dp"
+                    app:fabSize="mini" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="153dp"
+                    android:contentDescription="ocr 이미지"
+                    android:scaleType="fitCenter"
+                    app:layout_collapseMode="pin"
+                    app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24"
+                    />
+            </FrameLayout>
+
 
             <!--        구분선-->
             <View
@@ -159,7 +194,7 @@
                 android:background="#4DCDCDCD"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ety" />
+                app:layout_constraintTop_toBottomOf="@+id/ivl" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardView"
@@ -175,13 +210,38 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2">
 
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="#E8EAF6"
+                    android:src="@drawable/ic_baseline_campaign_24"
+                    app:fabCustomSize="40dp"
+                    app:fabSize="auto" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginEnd="75dp"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="#E8EAF6"
+                    android:src="@drawable/ic_baseline_image_24"
+                    app:fabCustomSize="40dp"
+                    app:fabSize="auto" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/result_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="..."
                     android:minHeight="200dp"
-                    android:padding="14dp"
+                    android:paddingStart="15dp"
+                    android:paddingTop="45dp"
                     android:text=""
                     android:textSize="18dp" />
             </com.google.android.material.card.MaterialCardView>
@@ -245,13 +305,12 @@
         android:id="@+id/cv2"
         android:layout_width="60dp"
         android:layout_height="57dp"
-        android:layout_marginTop="20dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="100dp"
         android:visibility="visible"
         app:cardBackgroundColor="#8F8F8F"
         app:cardCornerRadius="30dp"
         app:cardElevation="0dp"
-        app:layout_anchor="@+id/routeCaptionBottomSheet"
-        app:layout_anchorGravity="center"
         app:strokeWidth="0dp">
 
         <ImageButton

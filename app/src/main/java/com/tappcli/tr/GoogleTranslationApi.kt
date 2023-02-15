@@ -4,6 +4,8 @@ import android.util.Log
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.StrictMode
+import android.text.Html
+import android.text.Html.FROM_HTML_MODE_COMPACT
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.FragmentActivity
 import com.google.auth.oauth2.GoogleCredentials
@@ -37,7 +39,9 @@ class GoogleTranslationApi (var activity: FragmentActivity, var binding : Result
 
     }
 
-
+    /**
+     * 번역하기 메소드 입력된 타겟언어로 번역한다. 기본값은 english
+     * */
     fun translate(타겟언어코드:String) {
         //번역 모드에 따른 언어변수설정
         var targetLang = "en"
@@ -55,10 +59,12 @@ class GoogleTranslationApi (var activity: FragmentActivity, var binding : Result
             originalText,
             Translate.TranslateOption.targetLanguage(타겟언어코드), //tr = 터키어 , jp = 일본어 등..
             Translate.TranslateOption.model("base")
+//            Translate.TranslateOption.format("text")
         )
 
         //Translated text and original text are set to TextViews:
-        binding.resultTv.text = translation.translatedText
+//        binding.resultTv.text = translation.translatedText
+        binding.resultTv.text = Html.fromHtml(translation.translatedText, FROM_HTML_MODE_COMPACT)
 
     }
 

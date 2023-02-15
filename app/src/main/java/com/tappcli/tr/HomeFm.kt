@@ -1,9 +1,6 @@
 package com.tappcli.tr
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.speech.RecognitionListener
@@ -24,6 +21,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
@@ -32,8 +30,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.tappcli.MyApp
 import com.tappcli.R
 import com.tappcli.databinding.HomeFmBinding
+import com.tappcli.util.AlertDialogCustom
 import com.tappcli.util.PermissionHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -156,8 +156,19 @@ class HomeFm : Fragment() {
 //        )
 
 
-        //절 클릭시 바텀시트뷰 나타나게 함
-//        this.btsb.setState(BottomSheetBehavior.STATE_EXPANDED)
+
+        //로그인 유무 확인후 그 페이지로 이동할지 물음.
+        binding.homeToolbarIv.setOnClickListener {
+            if(MyApp.id.isEmpty()){
+                lifecycleScope.launch {
+                    val res = AlertDialogCustom(requireContext(),"로그인", "로그인 화면으로 이동하시겠습니까?").show()
+                    Log.d("디버그태그","res: $res")
+                    if(res){
+                        findNavController().navigate(R.id.action_global_loginFm)
+                    }
+                }
+            }
+        }
 
 
         //change_iv 한영 전환 버튼
@@ -241,6 +252,14 @@ class HomeFm : Fragment() {
 //        }
 
 
+        // widget_signal 체크부분
+        Log.e(tagName, "widget_signal in onresume: ${requireActivity().intent.extras?.get("widget_signal")}")
+        if(requireActivity().intent.extras?.get("widget_signal") == "translate") {
+            Log.e(tagName, "widget_signal in onresume")
+            requireActivity().intent.removeExtra("widget_signal") //remove로 하기..
+//            requireActivity().intent.extras?.getBundle("widget_signal")?.clear()
+            findNavController().navigate(R.id.action_homeFm_to_resultFm, Bundle().apply { putString("widget_signal2", "to_result_fm") })
+        }
 
     }
 

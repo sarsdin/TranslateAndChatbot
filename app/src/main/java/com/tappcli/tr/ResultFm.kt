@@ -5,7 +5,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -35,8 +39,12 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arthurivanets.bottomsheets.BottomSheet
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.imageview.ShapeableImageView
+import com.tappcli.MyApp
 import com.tappcli.R
 import com.tappcli.databinding.ResultFmBinding
+import com.tappcli.util.LanguagePack
 import com.tappcli.util.PermissionHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -120,6 +128,43 @@ class ResultFm : Fragment() {
 //        }
 //    }
 
+
+
+
+
+    var ocrImgUri : Uri? = null  // ocr 이미지픽커로 선택한 파일의 Uri
+//    val ocr = LanguagePack(MyApp.application!!)
+    private val ocr by lazy {
+        LanguagePack(requireActivity().applicationContext)
+    }
+    var ocrImgResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        val resultCode = result.resultCode
+        val data = result.data
+
+        if (resultCode == Activity.RESULT_OK) {
+            //우선 기존의 edittext layout 창을 안보이게함. Gone하면 안됌.. 기능은 수행해야하기 때문.
+            binding.ety.visibility = View.GONE
+            //그리고 반대로 이미지뷰는 보이게 해야함
+            binding.ivl.visibility = View.VISIBLE
+            //Image Uri will not be null for RESULT_OK
+            val fileUri = data?.data!!
+            ocrImgUri = fileUri
+            //이미지뷰에 사진 넣기
+            (binding.iv as ShapeableImageView).setImageURI(fileUri)
+            //받은 uri를 이용해 비트맵객체 생성
+            val bitmap = BitmapFactory.decodeStream(requireActivity().contentResolver.openInputStream(ocrImgUri!!))
+            //ocr 판독기능 수행
+            val resultString = ocr.printOCRResult(bitmap, homeVm.liveCurrentTranslateMode.value.toString())
+            binding.et.setText(resultString)
+
+
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireActivity(), "선택 취소", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        appBarConfiguration = AppBarConfiguration.Builder(R.id.home_fm).build()
@@ -180,6 +225,30 @@ class ResultFm : Fragment() {
 //            }
 //        }
 
+        // TTS 버튼(스피커아이콘) 클릭시 result_tv안의 내용 말하기
+        val tts = TTS(requireContext())
+        binding.fab.setOnClickListener {
+            tts.mainFn(binding.resultTv.text.toString())
+        }
+
+        // OCR img 버튼 클릭시
+        binding.fabImg.setOnClickListener {
+            ImagePicker.with(this)
+                .galleryOnly()
+                .compress(1024)         //Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)  //Final image resolution will be less than 1080 x 1080(Optional)
+                .createIntent { intent ->
+                    ocrImgResult.launch(intent)
+                }
+        }
+        // OCR img x 버튼 클릭시
+        binding.fabImgX.setOnClickListener {
+            binding.et.setText("")
+            binding.et.clearFocus()
+            binding.iv.setImageURI(null)
+            binding.ivl.visibility = View.GONE
+            binding.ety.visibility = View.VISIBLE
+        }
 
         //번역할 텍스트 입력 받기후 디바운스 적용
         var watcher = object : TextWatcher {
@@ -374,6 +443,16 @@ class ResultFm : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        if(arguments?.get("widget_signal2") == "to_result_fm"){
+            Handler(Looper.getMainLooper()).postDelayed(kotlinx.coroutines.Runnable {
+                binding.et.requestFocus()
+                val imm = (requireActivity()).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//                imm.showSoftInput(binding.et, 0) //직접 뷰를 설정해서 보이는 방법
+                imm.showSoftInput(requireActivity().currentFocus, 0) //현재 포커싱된 뷰를 여는 방법
+            },100)
+            arguments?.clear()
+            Log.e(tagName, "widget_signal in onresume")
+        }
 
     }
 

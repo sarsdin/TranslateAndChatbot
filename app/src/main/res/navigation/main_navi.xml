@@ -6,26 +6,6 @@
     app:startDestination="@id/homeFm">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.tappcli.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.tappcli.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/homeFm"
         android:name="com.tappcli.tr.HomeFm"
         android:label=""
@@ -89,4 +69,32 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <fragment
+        android:id="@+id/loginFm"
+        android:name="com.tappcli.login.LoginFm"
+        android:label="login_fm"
+        tools:layout="@layout/login_fm" >
+        <action
+            android:id="@+id/action_loginFm_to_joinAuthFm"
+            app:destination="@id/joinAuthFm" />
+    </fragment>
+    <fragment
+        android:id="@+id/joinAuthFm"
+        android:name="com.tappcli.login.JoinAuthFm"
+        android:label="login_join_auth_fm"
+        tools:layout="@layout/login_join_auth_fm" >
+        <action
+            android:id="@+id/action_joinAuthFm_to_joinFm"
+            app:destination="@id/joinFm" />
+    </fragment>
+    <fragment
+        android:id="@+id/joinFm"
+        android:name="com.tappcli.login.JoinFm"
+        android:label="login_join_fm"
+        tools:layout="@layout/login_join_fm" />
+    <action
+        android:id="@+id/action_global_loginFm"
+        app:destination="@id/loginFm"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim" /><action android:id="@+id/action_global_homeFm" app:destination="@id/homeFm"/>
 </navigation>

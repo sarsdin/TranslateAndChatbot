@@ -60,6 +60,8 @@ object Http {
         return retrofit
     }
 
+
+
     interface ApiChatBot {
         //채팅 가져오기
 //        @Headers("content-type: application/json")
@@ -85,13 +87,13 @@ object Http {
         fun isEmailRedundant(@Query("user_email") user_email: String?): Call<JsonObject?>?
 
         //회원가입 버튼 클릭시 - 신청
-        @GET("home/join")
-        fun joinComplete(
-            @Query("user_email") user_email: String?,
-            @Query("user_pwd") user_pwd: String?,
-            @Query("user_pwdc") user_pwdc: String?,
-            @Query("user_nick") user_nick: String?,
-            @Query("user_name") user_name: String?
+        @POST("joinComplete")
+        fun joinComplete(@Body joinInfo: HashMap<String, String>
+//            @Query("user_email") user_email: String?,
+//            @Query("user_pwd") user_pwd: String?,
+//            @Query("user_nick") user_nick: String?,
+//            @Query("user_name") user_name: String?,
+//            @Query("user_pwdc") user_pwdc: String?,
         ): Call<JsonObject?>?
 
         //비번찾기 이메일 인증번호 발송 버튼 클릭시 -
@@ -138,6 +140,8 @@ object Http {
             @Query("user_nick") user_nick: String?
         ): Call<JsonObject?>?
     }
+
+
 
     interface HttpHome {
         //성경일독

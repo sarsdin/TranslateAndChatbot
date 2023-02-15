@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.SharedPreferences
 //import android.preference.PreferenceManager
 import androidx.preference.PreferenceManager
+import com.google.firebase.auth.UserInfo
 import java.io.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -31,7 +32,8 @@ class MyApp : Application() {
 
     companion object {
         var application: Application? = null
-        var userInfo  = "a"
+        var id = ""
+        var nick = ""
 
         //    public static boolean isnaver = false;
         var sp: SharedPreferences? = null
@@ -251,4 +253,14 @@ class MyApp : Application() {
             return ""
         }
     }
+
+
+
+
+
+
+
+
+
+
 }

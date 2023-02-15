@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -24,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.tappcli.databinding.ChatbotFmBinding
-import com.tappcli.tr.TopSheetBehavior
 import com.tappcli.util.Http
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,7 +31,7 @@ import retrofit2.Response
 class ChatBotFm : Fragment() {
     val tagName = "[ChatBotFm]"
     val host = "10.0.2.2:5001" //안드로이드는 127.0.0.1에 접근 불가. 대신 미리 지정된 alias를 사용해 접근가능.
-    lateinit var chatBotVm: ChatBotVm
+    lateinit var chatBotVm: LoginVm
     var appBarConfiguration: AppBarConfiguration? = null
     private var navController: NavController? = null
 
@@ -49,7 +47,7 @@ class ChatBotFm : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        chatBotVm = ViewModelProvider(requireActivity()).get(ChatBotVm::class.java)
+        chatBotVm = ViewModelProvider(requireActivity()).get(LoginVm::class.java)
         채팅가져오기("getChat")
     }
 

@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.RemoteViews
 
 
@@ -43,9 +44,11 @@ internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManage
     views.setTextViewText(R.id.appwidget_text, widgetText)
 
     val intent = Intent(context, MainActivity::class.java)
-
-    val pe = PendingIntent.getActivity(context, 0, intent, 0)
-    views.setOnClickPendingIntent(R.id.image_button, pe)
+    intent.putExtra("widget_signal", "translate")
+    val pe = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+//    views.setOnClickPendingIntent(R.id.image_button, pe)
+    Log.e("Twidget", "widget_signal in updateAppWidget")
+    views.setOnClickPendingIntent(R.id.r_layout, pe)
 
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)

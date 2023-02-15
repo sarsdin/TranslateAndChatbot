@@ -9,7 +9,7 @@ import com.google.gson.JsonPrimitive
 import com.tappcli.databinding.ChatbotFmVhBinding
 import com.tappcli.databinding.ChatbotFmVhLeftBinding
 
-class ChatBotRva(val chatBotVm: ChatBotVm, val chatBotFm: ChatBotFm) : RecyclerView.Adapter<ChatBotRva.ChatBotFmVh>() {
+class ChatBotRva(val chatBotVm: LoginVm, val chatBotFm: ChatBotFm) : RecyclerView.Adapter<ChatBotRva.ChatBotFmVh>() {
     val tagName = "[ChatBotRva]"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatBotRva.ChatBotFmVh {

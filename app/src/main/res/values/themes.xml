@@ -6,6 +6,7 @@
         <!--   드로우 네비게이션 옵션     -->
 <!--        <item name="android:windowTranslucentStatus">true</item>-->
 
+        <item name="colorSurface">#FFFFFF</item>
     </style>
 
     <style name="Theme.Tappcli" parent="Base.Theme.Tappcli" />

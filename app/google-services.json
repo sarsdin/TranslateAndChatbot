@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "688940464267",
+    "project_id": "tapp-afe7b",
+    "storage_bucket": "tapp-afe7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688940464267:android:5187417ac297e2c0defc8e",
+        "android_client_info": {
+          "package_name": "com.tappcli"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688940464267-lptdivtoj2d1v5ps978vq6fn5rv799ss.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tappcli",
+            "certificate_hash": "52920827045f8d9971a4f2d2e7418ca83cd960d7"
+          }
+        },
+        {
+          "client_id": "688940464267-m4rke832qcpa1h7usrln9dem9nmtprsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ2oPUNMT60gZf5sLf1fUmvpVWo4kDqNY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688940464267-m4rke832qcpa1h7usrln9dem9nmtprsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

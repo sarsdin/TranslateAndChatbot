@@ -7,22 +7,26 @@
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/drawable/title_background.xml" value="0.2175" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/font/aclonica.xml" value="0.43385416666666665" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/activity_main.xml" value="0.4" />
-        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/chatbot_fm.xml" value="0.8766968325791855" />
+        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/chatbot_fm.xml" value="0.8123515439429929" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/chatbot_fm_vh.xml" value="0.8766968325791855" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/chatbot_fm_vh_left.xml" value="0.905152224824356" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/content_main.xml" value="0.4" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/fragment_first.xml" value="0.4" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/header_nav_view.xml" value="0.40260416666666665" />
-        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/home_fm.xml" value="0.2734375" />
+        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/home_fm.xml" value="0.7375" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/layout_record_bottom_sheet.xml" value="0.4036458333333333" />
+        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/login_find_pw_fm.xml" value="0.7375" />
+        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/login_fm.xml" value="0.7125" />
+        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/login_join_auth_fm.xml" value="0.7375" />
+        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/login_join_fm.xml" value="0.7375" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/main_activity.xml" value="0.3974358974358974" />
-        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/result_fm.xml" value="0.8766968325791855" />
+        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/result_fm.xml" value="0.8147268408551069" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/result_mic_fm.xml" value="0.4036458333333333" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/top_sheet_fm.xml" value="0.39895833333333336" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/twidget.xml" value="0.8766968325791855" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/layout/twidget_configure.xml" value="0.8766968325791855" />
         <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/menu/main_toolbar_menu.xml" value="0.39895833333333336" />
-        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/menu/menu_main.xml" value="0.8766968325791855" />
+        <entry key="..\:/work/AndroidStudioProjects/tappcli/app/src/main/res/menu/menu_main.xml" value="0.7125" />
       </map>
     </option>
   </component>
