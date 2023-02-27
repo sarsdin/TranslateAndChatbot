@@ -46,7 +46,10 @@ class LockScreenService : Service() {
 
         //알림바확장에서 포그라운드서비스 상태인 알림창을 클릭하면 번역앱 메인액티비티가 실행되도록 pending intent 구성.
         val pending = PendingIntent
-            .getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
+            .getActivity(this, 0, Intent(this, MainActivity::class.java),
+//                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_MUTABLE
+            )
 
         val notification = Notification.Builder(this, ALARM_ID)
             .setSmallIcon(R.mipmap.ic_launcher)

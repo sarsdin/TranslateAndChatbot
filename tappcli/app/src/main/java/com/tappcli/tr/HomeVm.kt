@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonArray
 
 class HomeVm : ViewModel() {
 
@@ -20,9 +21,14 @@ class HomeVm : ViewModel() {
     var secondBt = "영어"
     var liveSecondBt = MutableLiveData<String>()
 
+    var historyL = JsonArray() //검색이력 목록
+    var liveHistoryL = MutableLiveData<JsonArray>()
+    var liveFavoriteL = MutableLiveData<JsonArray>()
 
     init {
         liveCurrentTranslateMode.value = currentTranslateMode
+        liveHistoryL.value = historyL
+        liveFavoriteL.value = JsonArray()
     }
 
 

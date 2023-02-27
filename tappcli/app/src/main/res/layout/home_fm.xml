@@ -54,7 +54,7 @@
             <!--                android:fitsSystemWindows="true"-->
 
             <ImageButton
-                android:id="@+id/home_toolbar_write_bt"
+                android:id="@+id/home_toolbar_view_open_bt"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="start"
@@ -265,6 +265,8 @@
     <!--    <include-->
 <!--        android:id="@+id/include_layout"-->
 <!--        layout="@layout/top_sheet_fm" />-->
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

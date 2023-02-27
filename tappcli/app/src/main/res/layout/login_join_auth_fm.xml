@@ -27,7 +27,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="start"
                 android:layout_marginEnd="15dp"
-                android:background="#FFFFFF"
+                android:background="#00FFFFFF"
                 android:clickable="true"
                 android:contentDescription="이미지 입니다."
                 android:scaleType="centerCrop"
@@ -82,7 +82,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     >
 
         <com.google.android.material.textview.MaterialTextView
@@ -171,22 +171,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
-            android:id="@+id/join_auth_complete_bt"
-            android:layout_width="match_parent"
-            android:layout_height="60sp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="#C8E6C9"
-            android:text="인증완료"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    <!--    <Button-->
+        <!--    <Button-->
     <!--        android:id="@+id/join_phone_send_bt"-->
     <!--        android:layout_width="wrap_content"-->
     <!--        android:layout_height="wrap_content"-->
@@ -201,6 +186,25 @@
     <!--        app:layout_constraintTop_toTopOf="parent"-->
     <!--        app:layout_constraintVertical_bias="0.16400000"-->
     <!--        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />-->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/join_auth_complete_bt"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="132dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#C8E6C9"
+            android:text="인증완료"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/join_phone_confirm_textlayout"
+            app:layout_constraintVertical_bias="0.123" />
 
         <Button
             android:id="@+id/join_phone_verify_bt"

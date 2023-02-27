@@ -32,6 +32,8 @@
 
 <!--    <include layout="@layout/content_main" />-->
 
+
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_main_activity"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -41,6 +43,9 @@
         app:navGraph="@navigation/main_navi" />
 <!--        android:layout_marginTop="?attr/actionBarSize"-->
 
+    <include
+        android:id="@+id/include_layout"
+        layout="@layout/history_bts" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

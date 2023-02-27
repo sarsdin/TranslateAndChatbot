@@ -1,7 +1,9 @@
 package com.tappcli
 
 import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
+import androidx.lifecycle.MutableLiveData
 //import android.preference.PreferenceManager
 import androidx.preference.PreferenceManager
 import com.google.firebase.auth.UserInfo
@@ -10,14 +12,16 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 import java.util.*
 
 class MyApp : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        application = this
+//    var application: Application? = null
 
-        //토스트 라이브러리 옵션 설정 - 선택사항임 - 앱클래스파일 어디서든 이명령을 통해 설정 가능
+    init {
+        application = this
+    }
+//토스트 라이브러리 옵션 설정 - 선택사항임 - 앱클래스파일 어디서든 이명령을 통해 설정 가능
 //        Toasty.Config.getInstance()
 //            .tintIcon(boolean tintIcon) // optional (apply textColor also to the icon)
 //            .setToastTypeface(@NonNull Typeface typeface) // optional
@@ -28,16 +32,35 @@ class MyApp : Application() {
 //            .setRTL(boolean isRTL) // optional (icon is on the right)
 //            .apply(); // required
 //        Toasty.Config.reset(); // 앱클래스파일 어디서든 이명령을 통해 초기화 가능
-    }
 
     companion object {
-        var application: Application? = null
-        var id = ""
+        lateinit var application: MyApp
+        var id = 0
+        var email = ""
         var nick = ""
+        var liveLoginState = MutableLiveData<Int>().also { it.value = 0 }
+
+        fun logOut(): Boolean {
+            id = 0
+            email = ""
+            nick = ""
+            liveLoginState.value = id
+            return true
+        }
+
+        @JvmName("getApplication1")
+        fun getApplication(): MyApp {
+            return application
+        }
+
+        //fromFlag const
+        val 히스토리_및_즐겨찾기에서_왔음:Int = 1
+
+
 
         //    public static boolean isnaver = false;
         var sp: SharedPreferences? = null
-        private const val TAG = "내앱정보"
+        private const val TAG = "MyApp"
 
         //채팅방 안에 있는지 확인여부 - GroupChatinnerfm 안에 있으면 true 그외는 false 처리해야함 - 변경: 방번호로 바꿈. 서비스에서
         // 방번호에 있는지 확인해서 해당하는 방번호가 일치하면 알림을 보내지않고, 일치하지 않으면 그방에 없는 것이니 보내야함!
@@ -57,7 +80,6 @@ class MyApp : Application() {
         }
 
         val defaultSp: SharedPreferences
-//            get() = PreferenceManager.getDefaultSharedPreferences(application!!.applicationContext)
             get() = androidx.preference.PreferenceManager.getDefaultSharedPreferences(application!!.applicationContext)
 
         @JvmName("getSp1")
@@ -71,30 +93,20 @@ class MyApp : Application() {
             Companion.sp = sp
         }
 
-//        @JvmName("getUserInfo1")
-//        fun getUserInfo(): LoginDto? {
-//            return userInfo
-//        }
-//
-//        @JvmName("setUserInfo1")
-//        fun setUserInfo(userInfo: LoginDto?) {
-//            Companion.userInfo = userInfo
-//        }
-
         fun getTime(ui표시orData: String, datetime: String?): String {
+            var format = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm:ss") // H(0-23) hh(1-12)
+            var out_format = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm")
+            var out_format2 = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")
+            var out_format3 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+
             if (ui표시orData == "ui") {
-                val format = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm:ss") // H(0-23) hh(1-12)
-                val out_format = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm")
-                val out_format2 = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")
-                val out_format3 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
                 val ldt = LocalDateTime.parse(datetime, format) //포멧에 맞는 형태의 문자열 날짜시간값을 받아와서 파싱함
-                //            LocalDateTime.now().toInstant();
+//            LocalDateTime.now().toInstant();
 //            ldt.toEpochSecond(ZoneOffset.UTC);
                 val res_st = ldt.format(out_format)
                 val res_st2 = ldt.format(out_format2)
                 val res_st3 = ldt.format(out_format3)
-                val currentTime = LocalDateTime.now()
-                    .toEpochSecond(ZoneOffset.UTC) /*atZone(ZoneId.systemDefault()).toEpochSecond()*/
+                val currentTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) /*atZone(ZoneId.systemDefault()).toEpochSecond()*/
                 //zoneoffset의 구분은 중요하다. systemdefault zone으로 정하면 서울 시간을 기준으로 계산되고 utc기준이랑은 시차가 생기게 되니 주의해야한다.
                 val mNow = System.currentTimeMillis()
                 val mDate = Date(mNow) //1644034298
@@ -105,7 +117,7 @@ class MyApp : Application() {
                 val hour = (currentTime - ldt.toEpochSecond(ZoneOffset.UTC)) / 60 / 60
                 val day = (currentTime - ldt.toEpochSecond(ZoneOffset.UTC)) / 60 / 60 / 24
                 val year = (currentTime - ldt.toEpochSecond(ZoneOffset.UTC)) / 60 / 60 / 24 / 365
-                //            Log.e("MyApp", "res_st: "+res_st );
+//            Log.e("MyApp", "res_st: "+res_st );
 //            Log.e("MyApp", "res_st2: "+res_st2 );
 //            Log.e("MyApp", "res_st3: "+res_st3 );
 //            Log.e("MyApp", "currentTime: "+currentTime );
@@ -127,36 +139,33 @@ class MyApp : Application() {
                     return day.toString() + "일전"
                 }
                 return res_st
+
             } else if (ui표시orData == "data") { //현재 시간을 "yyyy-MM-dd hh:mm:ss" 형태의 포맷으로 리턴해줌
                 val mNow = System.currentTimeMillis()
                 val mDate = Date(mNow)
-                //            mDate.toInstant().getEpochSecond();
+//            mDate.toInstant().getEpochSecond();
                 val mtime = SimpleDateFormat()
                 return SimpleDateFormat("yyyy-MM-dd H:mm:ss").format(mDate)
+
             } else if (ui표시orData == ".") { //현재 시간을 "yyyy-MM-dd hh:mm:ss" 형태의 포맷으로 리턴해줌
                 val mNow = System.currentTimeMillis()
                 val mDate = Date(mNow)
-                //            mDate.toInstant().getEpochSecond();
+//            mDate.toInstant().getEpochSecond();
                 val mtime = SimpleDateFormat()
                 return SimpleDateFormat("yyyy.MM.dd").format(mDate)
+
             } else if (ui표시orData == ".ui") {
-                val format = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm:ss")
-                val out_format = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+                format = DateTimeFormatter.ISO_LOCAL_DATE_TIME // H(0-23) hh(1-12)
+                out_format = DateTimeFormatter.ofPattern("yyyy.MM.dd H:mm")
                 val ldt = LocalDateTime.parse(datetime, format) //포멧에 맞는 형태의 문자열 날짜시간값을 받아와서 파싱함
                 return ldt.format(out_format)
+
             } else if (ui표시orData == "ui2") {
-                val format = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm:ss")
-                val out_format = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm")
-                val out_format2 = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")
-                val out_format3 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
                 val ldt = LocalDateTime.parse(datetime, format) //포멧에 맞는 형태의 문자열 날짜시간값을 받아와서 파싱함
-                //            LocalDateTime.now().toInstant();
-//            ldt.toEpochSecond(ZoneOffset.UTC);
                 val res_st = ldt.format(out_format)
                 val res_st2 = ldt.format(out_format2)
                 val res_st3 = ldt.format(out_format3)
-                val currentTime = LocalDateTime.now()
-                    .toEpochSecond(ZoneOffset.UTC) /*atZone(ZoneId.systemDefault()).toEpochSecond()*/
+                val currentTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) /*atZone(ZoneId.systemDefault()).toEpochSecond()*/
                 //zoneoffset의 구분은 중요하다. systemdefault zone으로 정하면 서울 시간을 기준으로 계산되고 utc기준이랑은 시차가 생기게 되니 주의해야한다.
                 val mNow = System.currentTimeMillis()
                 val mDate = Date(mNow) //1644034298
@@ -179,19 +188,13 @@ class MyApp : Application() {
                     return day.toString() + "일 경과"
                 }
                 return res_st
+
             } else if (ui표시orData == "ui3") {
-                val format = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm:ss")
-                val out_format = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm")
-                val out_format2 = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")
-                val out_format3 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
                 val ldt = LocalDateTime.parse(datetime, format) //포멧에 맞는 형태의 문자열 날짜시간값을 받아와서 파싱함
-                //            LocalDateTime.now().toInstant();
-//            ldt.toEpochSecond(ZoneOffset.UTC);
                 val res_st = ldt.format(out_format)
                 val res_st2 = ldt.format(out_format2)
                 val res_st3 = ldt.format(out_format3)
-                val currentTime = LocalDateTime.now()
-                    .toEpochSecond(ZoneOffset.UTC) /*atZone(ZoneId.systemDefault()).toEpochSecond()*/
+                val currentTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) /*atZone(ZoneId.systemDefault()).toEpochSecond()*/
                 //zoneoffset의 구분은 중요하다. systemdefault zone으로 정하면 서울 시간을 기준으로 계산되고 utc기준이랑은 시차가 생기게 되니 주의해야한다.
                 val mNow = System.currentTimeMillis()
                 val mDate = Date(mNow) //1644034298
@@ -214,19 +217,13 @@ class MyApp : Application() {
                     return day.toString() + "일"
                 }
                 return res_st
+
             } else if (ui표시orData == "ui4") {
-                val format = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm:ss")
-                val out_format = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm")
-                val out_format2 = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")
-                val out_format3 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
                 val ldt = LocalDateTime.parse(datetime, format) //포멧에 맞는 형태의 문자열 날짜시간값을 받아와서 파싱함
-                //            LocalDateTime.now().toInstant();
-//            ldt.toEpochSecond(ZoneOffset.UTC);
                 val res_st = ldt.format(out_format)
                 val res_st2 = ldt.format(out_format2)
                 val res_st3 = ldt.format(out_format3)
-                val currentTime = LocalDateTime.now()
-                    .toEpochSecond(ZoneOffset.UTC) /*atZone(ZoneId.systemDefault()).toEpochSecond()*/
+                val currentTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) /*atZone(ZoneId.systemDefault()).toEpochSecond()*/
                 //zoneoffset의 구분은 중요하다. systemdefault zone으로 정하면 서울 시간을 기준으로 계산되고 utc기준이랑은 시차가 생기게 되니 주의해야한다.
                 val mNow = System.currentTimeMillis()
                 val mDate = Date(mNow) //1644034298
@@ -250,6 +247,7 @@ class MyApp : Application() {
                 }
                 return res_st
             }
+
             return ""
         }
     }

@@ -29,7 +29,7 @@
                 android:id="@+id/back_ib"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="#FFFFFF"
+                android:background="#00FFFFFF"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_baseline_arrow_back_ios_new_10"
                 app:tint="#494949" />
@@ -243,6 +243,7 @@
                     android:paddingStart="15dp"
                     android:paddingTop="45dp"
                     android:text=""
+                    android:textIsSelectable="true"
                     android:textSize="18dp" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -276,6 +277,34 @@
                     app:tint="#FFFFFF" />
             </com.google.android.material.card.MaterialCardView>
 
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv2"
+                android:layout_width="60dp"
+                android:layout_height="57dp"
+                android:layout_gravity="bottom|center"
+                android:layout_marginTop="142dp"
+                android:visibility="visible"
+                app:cardBackgroundColor="#8F8F8F"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                app:strokeWidth="0dp">
+
+                <ImageButton
+                    android:id="@+id/image_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#26A69A"
+                    android:cropToPadding="false"
+                    android:padding="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_baseline_mic_24"
+                    app:tint="#FFFFFF" />
+            </com.google.android.material.card.MaterialCardView>
+
             <org.quanqi.circularprogress.CircularProgressView
                 android:id="@+id/search_progress_bar"
                 android:layout_width="80dp"
@@ -288,9 +317,8 @@
                 app:borderWidth="@dimen/circular_default_border_width"
                 app:colorSequence="@array/circular_default_color_sequence"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.438"
                 app:sweepAnimationDurationMillis="@integer/circular_default_sweepAnimationDuration"
@@ -301,33 +329,15 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cv2"
-        android:layout_width="60dp"
-        android:layout_height="57dp"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="100dp"
-        android:visibility="visible"
-        app:cardBackgroundColor="#8F8F8F"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="0dp">
 
-        <ImageButton
-            android:id="@+id/image_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#26A69A"
-            android:cropToPadding="false"
-            android:padding="10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_baseline_mic_24"
-            app:tint="#FFFFFF" />
-    </com.google.android.material.card.MaterialCardView>
 
     <!--    <include-->
     <!--        android:id="@+id/include_layout"-->
     <!--        layout="@layout/top_sheet_fm" />-->
+
+<!--    <include-->
+<!--        android:id="@+id/include_layout"-->
+<!--        layout="@layout/result_bts" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

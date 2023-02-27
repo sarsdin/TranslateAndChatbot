@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 32
 
     defaultConfig {
         applicationId "com.tappcli"
@@ -63,7 +63,7 @@ android {
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.annotation:annotation:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
@@ -158,16 +158,6 @@ dependencies {
 
     // Ted Image Picker Library
     implementation 'io.github.ParkSangGwon:tedimagepicker:1.2.7'
-
-    // Retrofit2
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
-
-    // Glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     // Circular progress bar
     implementation 'org.quanqi:CircularProgress:1.0.2'

@@ -1,43 +1,35 @@
 package com.tappcli.tr
 
 import android.app.Activity
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.speech.RecognitionListener
-import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.tappcli.MainActivity
 import com.tappcli.MyApp
 import com.tappcli.R
 import com.tappcli.databinding.HomeFmBinding
 import com.tappcli.util.AlertDialogCustom
-import com.tappcli.util.PermissionHelper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeFm : Fragment() {
@@ -51,13 +43,15 @@ class HomeFm : Fragment() {
 //    lateinit var rva: HomeFmImgRva
 //    lateinit var imgVpa: HomeFmImgVpa
 
-    lateinit var tops: TopSheetBehavior<LinearLayout>
+//    lateinit var tops: TopSheetBehavior<LinearLayout>
 
     var mbinding: HomeFmBinding? = null
     val binding get() = mbinding!! //null체크를 매번 안하게끔 재 선언
 
     var recordDialog: RecordBottomSheetDialog? = null
     var mRecognizer: SpeechRecognizer? = null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -156,10 +150,15 @@ class HomeFm : Fragment() {
 //        )
 
 
+        //사이드 드로뷰 열기
+        binding.homeToolbarViewOpenBt.setOnClickListener {
+            (requireActivity() as MainActivity).binding.root.openDrawer(GravityCompat.START)
+        }
+
 
         //로그인 유무 확인후 그 페이지로 이동할지 물음.
         binding.homeToolbarIv.setOnClickListener {
-            if(MyApp.id.isEmpty()){
+            if(MyApp.id == 0){
                 lifecycleScope.launch {
                     val res = AlertDialogCustom(requireContext(),"로그인", "로그인 화면으로 이동하시겠습니까?").show()
                     Log.d("디버그태그","res: $res")
@@ -205,7 +204,7 @@ class HomeFm : Fragment() {
 //            findNavController().navigate(R.id.action_homeFm_to_resultMicFm)
         }
 
-        Log.e(tagName, "왜 안돼냐!?? ")
+
 
 
     }

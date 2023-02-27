@@ -77,14 +77,28 @@ object Http {
         @POST("writeChat")
         fun writeChat(@Body user_input: JsonObject?): Call<JsonObject?>?
 
+    }
+
+    interface Translate {
+
+
+
+        @POST("historyDelete")
+        fun 히스토리삭제(@Body user_no: String?, @Body history_no: String?): Call<JsonObject?>?
+
+        @POST("historyDeleteAll/{user_no}")
+        fun 히스토리전체삭제(/*@Query*/@Path("user_no") user_no: String?): Call<JsonObject?>?
+
+        @POST("historyFavoriteCheck")
+        fun 즐겨찾기등록해제(@Body info: HashMap<String, String>): Call<JsonObject?>?
 
     }
 
 
     interface HttpLogin {
         // 이메일 중복확인 통신
-        @GET("home/isEmailRedundant")
-        fun isEmailRedundant(@Query("user_email") user_email: String?): Call<JsonObject?>?
+        @GET("joinEmailVerify/{user_email}")
+        fun isEmailRedundant(/*@Query*/@Path("user_email") user_email: String?): Call<JsonObject?>?
 
         //회원가입 버튼 클릭시 - 신청
         @POST("joinComplete")
@@ -119,11 +133,30 @@ object Http {
         ): Call<JsonObject?>?
 
         //로그인 버튼 클릭시
-        //        @GET("home/login")
-        //        Call<LoginDto> login(@Query("user_email") String user_email,
-        //                             @Query("user_pwd") String user_pwd,
-        //                             @Query("user_autologin") Boolean user_autologin
-        //        );
+        @POST("/login")
+        fun login(
+            @Body loginInfo: HashMap<String, String>
+        ) : Call<JsonObject?>?
+
+        @POST("/history")
+        fun history(
+            @Body info: HashMap<String, String>
+        ) : Call<JsonObject?>?
+
+        @POST("/historyGet")
+        fun historyGet(
+            @Body info: HashMap<String, String>
+        ) : Call<JsonObject?>?
+
+
+
+
+
+
+//        Call<LoginDto> login(@Query("user_email") String user_email,
+//                             @Query("user_pwd") String user_pwd,
+//                             @Query("user_autologin") Boolean user_autologin
+//        );
         //자동로그인시 쉐어드에 유저정보가 있으면 서버에서 그 유저 정보 불러오면서 자동로그인하기
         //        @GET("home/getAutoLoginInfo")
         //        Call<LoginDto> getAutoLoginInfo(@Query("user_email") String user_email);
@@ -154,7 +187,7 @@ object Http {
             "content-type: application/json"
         )
         @GET("/photos/random")
-        fun 랜덤이미지(@Query("query") query: String?, @Query("count") count: Int): Call<JsonArray?>?
+        fun 랜덤이미지( @Header("token") token: String?, @Query("query") query: String?, @Query("count") count: Int): Call<JsonArray?>?
     }
 
     interface HttpBible {

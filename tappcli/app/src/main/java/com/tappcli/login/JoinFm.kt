@@ -20,6 +20,9 @@ import com.google.gson.JsonObject
 import com.tappcli.R
 import com.tappcli.databinding.LoginJoinFmBinding
 import com.tappcli.util.Http
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +31,8 @@ import kotlin.Boolean
 import kotlin.CharSequence
 import kotlin.Int
 import kotlin.Throwable
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.suspendCoroutine
 import kotlin.toString
 
 
@@ -75,7 +80,8 @@ class JoinFm : Fragment() {
             infoMap["user_name"] = binding.joinNameInput.text.toString()
             infoMap["user_nick"] = binding.joinNicknameInput.text.toString()
             infoMap["user_pwd"] = binding.joinPwInput.text.toString()
-            infoMap["user_pwdc"] = binding.joinPwVerifyInput.text.toString()
+//            infoMap["user_pwdc"] = binding.joinPwVerifyInput.text.toString()
+            infoMap["user_image"] = ""
 
             Http.getRetrofitInstance(host)!!.create(Http.HttpLogin::class.java).joinComplete(infoMap)!!
                 .enqueue(object : Callback<JsonObject?> {
@@ -84,17 +90,18 @@ class JoinFm : Fragment() {
                     if (response.isSuccessful) {
                         val res = response.body()
                         Log.e("[JoinFm]", "회원가입 onResponse: 통신성공, body는: " + res.toString())
-                        if (res!!["result"].asBoolean) {
-                            Toast.makeText(activity, res["msg"].asString, Toast.LENGTH_SHORT).show()
-                            NavHostFragment.findNavController(this@JoinFm).navigate(R.id.action_global_homeFm)
+                        if (res!!["res"].asBoolean) {
+                            Toast.makeText(requireActivity(), "회원가입 하였습니다. 로그인해주세요.", Toast.LENGTH_SHORT).show()
+//                            NavHostFragment.findNavController(this@JoinFm).navigate(R.id.action_global_homeFm)
+                            NavHostFragment.findNavController(this@JoinFm).navigate(R.id.action_global_loginFm)
                         } else {
-                            Toast.makeText(activity, "이미 존재하는 회원입니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireActivity(), "이미 존재하는 회원입니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
-                    Log.e("[JoinFm]", "이메일중복검사통신 onFailure: " + t.message)
+                    Log.e("[JoinFm]", "회원가입 onFailure: " + t.message)
                 }
             })
         }
@@ -117,6 +124,7 @@ class JoinFm : Fragment() {
     /**
      * 회원가입 시 형식 유효성 검사를 위한 텍스트 와쳐 생성!
      */
+
     private fun validationCheck() {
 
         // 필수 입력란 모두 충족되는지 관찰하는 옵져버 생성
@@ -130,6 +138,7 @@ class JoinFm : Fragment() {
                     binding.joinCompleteBt.isEnabled = count == 5
                 }
             }
+//            Log.e(tagName, "verifyArray: $verifyArray")
         }
 
 
@@ -137,7 +146,11 @@ class JoinFm : Fragment() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                verifyArray[0] = validateEmail()
+                CoroutineScope(Dispatchers.Main).launch {
+                    verifyArray[0] = validateEmail()
+                    verifyForm.value = verifyArray
+
+                }
             }
         }
         val nameWatcher: TextWatcher = object : TextWatcher {
@@ -145,6 +158,7 @@ class JoinFm : Fragment() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 verifyArray[1] = validateName()
+                verifyForm.value = verifyArray
             }
         }
         val nickWatcher: TextWatcher = object : TextWatcher {
@@ -152,6 +166,7 @@ class JoinFm : Fragment() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 verifyArray[2] = validateNick()
+                verifyForm.value = verifyArray
             }
         }
         val pwWatcher: TextWatcher = object : TextWatcher {
@@ -159,6 +174,7 @@ class JoinFm : Fragment() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 verifyArray[3] = validatePw()
+                verifyForm.value = verifyArray
             }
         }
         val pwVerifyWatcher: TextWatcher = object : TextWatcher {
@@ -166,6 +182,7 @@ class JoinFm : Fragment() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 verifyArray[4] = validatePwVerify()
+                verifyForm.value = verifyArray
             }
         }
 
@@ -181,7 +198,7 @@ class JoinFm : Fragment() {
     /**
      * 회원가입시 이메일,패스워드 등등의 형식 맞는지 검사 후 textInputLayout 에 오류유무 보여주기
      */
-    private fun validateEmail(): Boolean {
+    private suspend fun validateEmail(): Boolean {
         val value = String.valueOf(binding.joinEmailInput.text)
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
         return if (value.isEmpty()) {
@@ -191,8 +208,38 @@ class JoinFm : Fragment() {
             binding.joinEmailTextlayout.error = "이메일 형식이 맞지 않습니다."
             false
         } else {
-            binding.joinEmailTextlayout.error = null
-            true
+            //통신해서 중복유무 체크해야함.
+            var r = false
+            suspendCoroutine { cont: Continuation<Unit> ->
+
+                Http.getRetrofitInstance(host)!!.create(Http.HttpLogin::class.java).isEmailRedundant(value)!!
+                .enqueue(object : Callback<JsonObject?> {
+                    override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
+                        Log.e("[JoinFm]", "isEmailRedundant onResponse: 통신성공, code는: " + response.code())
+                        if (response.isSuccessful) {
+                            val res = response.body()
+                            Log.e("[JoinFm]", "isEmailRedundant onResponse: 통신성공, body는: " + res.toString())
+                            if (res!!["res"].asBoolean) {
+                                Toast.makeText(activity, res["res"].asString, Toast.LENGTH_SHORT).show()
+//                                NavHostFragment.findNavController(this@JoinFm).navigate(R.id.action_global_homeFm)
+//                                Toast.makeText(activity, "이미 존재하는 Email 입니다.", Toast.LENGTH_SHORT).show()
+                                binding.joinEmailTextlayout.error = "사용중인 Email 입니다."
+                            } else {
+                                Toast.makeText(activity, "사용가능한 Email 입니다.", Toast.LENGTH_SHORT).show()
+                                binding.joinEmailTextlayout.error = null
+                                r = true
+                            }
+                        }
+                        cont.resumeWith(Result.success(Unit))
+                    }
+
+                    override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                        Log.e("[JoinFm]", "isEmailRedundant onFailure: " + t.message)
+                    }
+                })
+
+            }
+            r //비동기 통신 결과 성공시 r은 true를 반환함
         }
     }
 

@@ -78,7 +78,7 @@ object PermissionHelper {
             granted()
         } else { // 권한을 허용하지 않은 상태라면
             // 권한 요청이 필요하다는 Toast를 보여줌.
-            // 사용자게에 펄미션 요청, 요청 결과는 onRequestPermissionResult에서 수신
+            // 사용자게에 펄미션 요청, 요청 결과는 activity 나 fragment 에서 override 된 onRequestPermissionResult()에서 수신
             ActivityCompat.requestPermissions(activity, REQUIRED_PERMISSION_RECORD, PERMISSION_RECORD_REQUEST_CODE)
         }
     }

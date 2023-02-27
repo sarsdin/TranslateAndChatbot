@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.tappcli.MainActivity">
     <item
+        android:id="@+id/loginFm"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="로그인"
+        android:checkable="true"
+        app:showAsAction="ifRoom"
+        />
+    <item
         android:id="@+id/chatBotFm"
         android:icon="@drawable/ic_baseline_chat_bubble_outline_24"
         android:title="챗봇"
@@ -10,9 +17,16 @@
         app:showAsAction="ifRoom"
         />
     <item
-        android:id="@+id/loginFm"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="로그인"
+        android:id="@+id/historyBts"
+        android:icon="@drawable/ic_note_icon"
+        android:title="검색 내역"
+        android:checkable="true"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_baseline_favorite_border_24"
+        android:title="즐겨찾기"
         android:checkable="true"
         app:showAsAction="ifRoom"
         />

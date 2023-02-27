@@ -1,12 +1,12 @@
 import torch
-import ReqApi
+# from ReqApi import *
 from transformers import AutoTokenizer, AutoModelForCausalLM
-from fastapi import FastAPI, Request
-from typing import Union
-from pydantic import BaseModel, EmailStr
+# from fastapi import FastAPI, Request
+# from typing import Union
+# from pydantic import BaseModel, EmailStr
 
 # 서버 만들기
-app = FastAPI()
+# app = FastAPI()
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -32,63 +32,6 @@ print("모델 로딩 완료.")
 if __name__ == '__chat__':
     print('chat server started.')
 
-
-@app.get("/")
-def read_root():
-    return {
-        "Hello": "World"
-    }
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id ": item_id, "q": q}
-
-
-class Item(BaseModel):
-    # content: List[str]
-    user_input: str
-    # password: str
-    # email: EmailStr
-    # full_name: Optional[str] = None
-
-# , response_model=Item, response_model_exclude_unset=True
-# 요청이 들어오면 알아서 요청안의 요소중 이름이 같은 요소명을 item class의 이름이 같은 변수로 맵핑하여 인자로 던져줌.
-@app.post("/writeChat")
-def writeChat(item: Item, req: Request):
-    # past_user_inputs
-    # generated_responses
-    # await req.json()
-    print("hello??")
-    if item.user_input == "--초기화":
-        초기화()
-        return {"past_user_inputs": past_user_inputs, "generated_responses": generated_responses}
-
-    process_req(item.user_input)
-    return {"past_user_inputs": past_user_inputs, "generated_responses": generated_responses}
-
-
-@app.get("/getChat")
-def getChat():
-    print(past_user_inputs)
-    # generated_responses
-    return {"past_user_inputs": past_user_inputs, "generated_responses": generated_responses}
-
-
-
-@app.post("/joinComplete")
-def joinComplete():
-    print("d")
-
-    return {"past_user_inputs": past_user_inputs, "generated_responses": generated_responses}
-
-
-
-# @app.get("/chat1/{chat11}")
-# def read_chat(chat11: int):
-#     print(past_user_inputs)
-#     # generated_responses
-#     return {"past_user_inputs ": chat11, "generated_responses": "generated_responses"}
 
 
 base_prompt = """
@@ -134,6 +77,7 @@ def 초기화():
 
 
 def process_req(user_input: str) -> str:
+
     print("hi?")
 
     # user_input = input(">> User:")

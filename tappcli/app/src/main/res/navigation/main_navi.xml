@@ -16,11 +16,6 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
         <action
-            android:id="@+id/action_homeFm_to_resultMicFm"
-            app:destination="@id/resultMicFm"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-        <action
             android:id="@+id/action_homeFm_to_chatBotFm"
             app:destination="@id/chatBotFm"
             app:enterAnim="@anim/nav_default_enter_anim"
@@ -37,17 +32,6 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
-    <fragment
-        android:id="@+id/resultMicFm"
-        android:name="com.tappcli.tr.ResultMicFm"
-        android:label="ResultMicFm"
-        tools:layout="@layout/result_fm">
-        <action
-            android:id="@+id/action_resultMicFm_to_homeFm"
-            app:destination="@id/homeFm"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/chatBotFm"
@@ -97,4 +81,27 @@
         app:destination="@id/loginFm"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim" /><action android:id="@+id/action_global_homeFm" app:destination="@id/homeFm"/>
+    <fragment
+        android:id="@+id/favoriteFm"
+        android:name="com.tappcli.tr.FavoriteFm"
+        android:label="FavoriteFm"
+        tools:layout="@layout/favorite_fm"/>
+    <action
+        android:id="@+id/action_global_favoriteFm"
+        app:destination="@id/favoriteFm"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim" />
+    <action
+        android:id="@+id/action_global_resultFm"
+        app:destination="@id/resultFm"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="true"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <fragment
+        android:id="@+id/joinFindPwFm"
+        android:name="com.tappcli.login.JoinFindPwFm"
+        android:label="JoinFindPwFm"
+        tools:layout="@layout/login_join_fm"/>
 </navigation>

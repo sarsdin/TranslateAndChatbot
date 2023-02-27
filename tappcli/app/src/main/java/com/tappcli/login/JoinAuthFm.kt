@@ -115,6 +115,10 @@ class JoinAuthFm : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModelCallback()
 
+        binding.tv.setOnClickListener {
+            findNavController().navigate(R.id.action_joinAuthFm_to_joinFm)
+        }
+
     }
 
     private fun initViewModelCallback() {

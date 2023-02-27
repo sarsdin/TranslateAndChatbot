@@ -5,7 +5,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.MATCH_ALL
+import android.content.pm.PackageManager.MATCH_DEFAULT_ONLY
+import android.content.pm.ResolveInfo
 import android.graphics.BitmapFactory
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -16,41 +20,35 @@ import android.speech.SpeechRecognizer
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.arthurivanets.bottomsheets.BottomSheet
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.imageview.ShapeableImageView
+import com.google.gson.Gson
+import com.google.gson.JsonParser
 import com.tappcli.MyApp
 import com.tappcli.R
 import com.tappcli.databinding.ResultFmBinding
+import com.tappcli.util.ContextMenuLoad
 import com.tappcli.util.LanguagePack
 import com.tappcli.util.PermissionHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.checkerframework.checker.units.qual.s
+
 
 class ResultFm : Fragment() {
     val tagName = "[ResultFm]"
@@ -71,6 +69,13 @@ class ResultFm : Fragment() {
     var mRecognizer: SpeechRecognizer? = null //speech to text 안드로이드 서비스
     lateinit var gApi : GoogleTranslationApi //구글 번역 클래스
 
+
+//    //바텀시트뷰안의 리사이클러뷰(색깔목록)
+//    var btsR: RecyclerView? = null
+//    var btsb: BottomSheetBehavior<*>? = null
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeVm = ViewModelProvider(requireActivity()).get(HomeVm::class.java)
@@ -79,7 +84,7 @@ class ResultFm : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mbinding = ResultFmBinding.inflate(inflater, container, false)
-        gApi = GoogleTranslationApi(requireActivity(),binding)
+        gApi = GoogleTranslationApi(requireActivity(), binding, this@ResultFm)
         Log.e(tagName, "왜 안돼냐!?? ")
 //        rv = binding.imgRv
 //        rv.setHasFixedSize(true)
@@ -94,40 +99,6 @@ class ResultFm : Fragment() {
 
         return binding.root
     }
-
-    //editImageActivity 를 열었던 결과를 콜백받음.
-    val editImageActivityForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
-        val resultCode = result.resultCode
-        val data = result.data
-        if(resultCode == Activity.RESULT_OK){
-//            val photos : ArrayList<UnsplashPhoto>? = data?.getParcelableArrayListExtra(UnsplashPickerActivity.EXTRA_PHOTOS)
-//            if (photos != null) {
-//                homeVm.unsplashL = photos
-//                homeVm.liveUnsplashL.value = homeVm.unsplashL
-//            }
-            if (data != null) {
-                Log.e(tagName, "editImageActivityForResult: ${data.getStringExtra("editFinished")}")
-            } else {
-                Log.e(tagName, "editImageActivityForResult: data is null")
-            }
-        }
-    }
-
-    //unsplash picker Activity 를 열었던 결과를 콜백받음.
-//    val unsplashForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
-//        val resultCode = result.resultCode
-//        val data = result.data
-//
-//        if(resultCode == Activity.RESULT_OK){
-//            val photos : ArrayList<UnsplashPhoto>? = data?.getParcelableArrayListExtra(
-//                UnsplashPickerActivity.EXTRA_PHOTOS)
-//            if (photos != null) {
-//                homeVm.unsplashL = photos
-//                homeVm.liveUnsplashL.value = homeVm.unsplashL
-//            }
-//        }
-//    }
-
 
 
 
@@ -175,6 +146,8 @@ class ResultFm : Fragment() {
 //            appBarConfiguration!!
 //        )
 
+
+
         //뒤로가기 버튼 클릭시 뒤로
         binding.backIb.setOnClickListener {
             findNavController().navigateUp()
@@ -193,10 +166,7 @@ class ResultFm : Fragment() {
 
         //번역 서비스 불러오기
         gApi.getTranslateService()
-        //번역 버튼 클릭시 번역하기
-//        binding.translateIb.setOnClickListener {
-//            gApi.translate()
-//        }
+
 
         //한영 전환 버튼(타이틀바) 클릭시
         binding.changeIv.setOnClickListener {
@@ -251,7 +221,7 @@ class ResultFm : Fragment() {
         }
 
         //번역할 텍스트 입력 받기후 디바운스 적용
-        var watcher = object : TextWatcher {
+        val watcher = object : TextWatcher {
             private var searchFor = ""
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -270,13 +240,23 @@ class ResultFm : Fragment() {
 
                     // do our magic
 //                    Toast.makeText(requireActivity(),"watch active",Toast.LENGTH_SHORT).show()
-                    var lang : String = "en"
+                    var 타겟언어코드 : String = "en"
+                    var 원본언어코드 : String = "ko"
                     if(homeVm.liveCurrentTranslateMode.value == "한영"){
-                        lang = "en"
+                        타겟언어코드 = "en"
+                        원본언어코드 = "ko"
                     }else{
-                        lang = "ko"
+                        타겟언어코드 = "ko"
+                        원본언어코드 = "en"
                     }
-                    gApi.translate(lang)
+
+                    if(arguments?.get("signal1").toString() == "${MyApp.히스토리_및_즐겨찾기에서_왔음}"){
+                        gApi.translate(타겟언어코드, 원본언어코드, MyApp.히스토리_및_즐겨찾기에서_왔음)
+                        arguments?.remove("signal1")
+                        arguments?.remove("data")
+                    }else{
+                        gApi.translate(타겟언어코드, 원본언어코드, 0)
+                    }
                 }
             }
 
@@ -287,7 +267,6 @@ class ResultFm : Fragment() {
 //            }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
         }
-
 
         //번역입력창에 텍스트와쳐 적용하기
         binding.et.addTextChangedListener(watcher)
@@ -303,7 +282,70 @@ class ResultFm : Fragment() {
 //            })
 //        }
 
+
+        //텍스트 셀렉트 시 사용자 커스텀 메뉴를 추가하는 콜백.
+        val actionModeCallBack = object : ActionMode.Callback2() {
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                // 컨텍스트 액션 모드 설정 및 메뉴 생성 코드 작성
+//                mode?.title = "Select Text"
+//                mode?.menuInflater?.inflate(R.menu.tv_menu, menu)
+                ContextMenuLoad(tagName, binding.resultTv).onInitializeMenu(menu!!, mapOf(Pair("다음사전", "사전"))) //수동으로 불러옴.
+
+                return true
+            }
+
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                return true
+            }
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                when (item?.itemId) {
+                    R.id.dict -> {
+                        // 사전 기능 구현
+                        //선택된 텍스트 값 가져오기
+                        val selectedText = binding.resultTv.run {
+                            text.substring(selectionStart, selectionEnd)
+                        }
+                        Log.e(tagName, "selectedText: ${selectedText}")
+
+                        return true
+                    }
+                    else -> return false
+                }
+            }
+
+            override fun onDestroyActionMode(mode: ActionMode?) {
+                // 컨텍스트 액션 모드 종료시 처리할 코드 작성
+            }
+
+            override fun onGetContentRect(mode: ActionMode?, view: View?, outRect: Rect?) {
+                super.onGetContentRect(mode, view, outRect)
+                Log.e(tagName, "outRect?.bottom: ${outRect?.bottom}")
+//                mode?.invalidateContentRect() // outRect에서 위치 좌표를 받아와 화면에서 벋어나는 좌표가 찍히면 이것을 실행했을때 메뉴를 off할 수 있을듯
+            }
+
+        }/*.apply {
+
+        }*/
+
+        //텍스트 셀렉트 시 위에서 만든 사용자 커스텀 메뉴를 추가하는 콜백 등록.
+        binding.resultTv.customSelectionActionModeCallback = actionModeCallBack
+//        binding.resultTv.setOnLongClickListener {
+//            binding.resultTv.startActionMode(actionModeCallBack, ActionMode.TYPE_FLOATING)
+//            true
+//        }
+
+
+
+
     }
+
+
+
+
+
+
+
 
 
     // 음성으로 검색하기 다이얼로그 보여주기
@@ -320,8 +362,7 @@ class ResultFm : Fragment() {
                     delay(500L)
                     it.show()
                     if (mRecognizer == null) {
-                        mRecognizer =
-                            SpeechRecognizer.createSpeechRecognizer(requireActivity()) // 새로운 SpeechRecognizer를 만드는 팩토리 메서드
+                        mRecognizer = SpeechRecognizer.createSpeechRecognizer(requireActivity()) // 새로운 SpeechRecognizer를 만드는 팩토리 메서드
                         mRecognizer?.setRecognitionListener(getRecognitionListener())
                     }
 
@@ -443,6 +484,7 @@ class ResultFm : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        //위젯 컨트롤
         if(arguments?.get("widget_signal2") == "to_result_fm"){
             Handler(Looper.getMainLooper()).postDelayed(kotlinx.coroutines.Runnable {
                 binding.et.requestFocus()
@@ -452,11 +494,41 @@ class ResultFm : Fragment() {
             },100)
             arguments?.clear()
             Log.e(tagName, "widget_signal in onresume")
+
+
+        } else if(arguments?.get("signal1") == MyApp.히스토리_및_즐겨찾기에서_왔음.toString()){
+            //히스토리 & 즐겨찾기 클릭시
+            히스토리즐찾클릭()
+
+
         }
+
+
 
     }
 
 
+    fun 히스토리즐찾클릭(){
+        arguments?.get("data").toString().run {
+            JsonParser.parseString(this).asJsonObject.run {
+                Log.e(tagName, Gson().toJson(this))
+                if(this.get("favorite_content") == null){
+                    binding.et.text = Editable.Factory.getInstance().newEditable(this["history_content"].asString)
+                    //그리고, history_content_lang 의 값이 en 이라면 googletranslationapi의 타겟언어코드도 en 으로 설정. ko 라면 ko로..
+                    //homeVm에서 mode를 "한영" 으로 바꾸면됨
+                }else{
+                    binding.et.setText(this["favorite_content"].asString)
+
+                }
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.et.setText("") //페이지에서 나갈때(이동시)는 항상 검색창 초기화 해줌. 나중에 뒤로가기등으로 돌아오면 자동으로 검색하기때문..
+        binding.et.clearFocus()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
