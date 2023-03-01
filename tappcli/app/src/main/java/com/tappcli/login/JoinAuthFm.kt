@@ -3,10 +3,13 @@ package com.tappcli.login;
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,11 +23,21 @@ import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.gson.JsonObject
 import com.tappcli.R
 import com.tappcli.databinding.LoginFmBinding
 import com.tappcli.databinding.LoginJoinAuthFmBinding
+import com.tappcli.util.Http
 import gun0912.tedimagepicker.util.ToastUtil.showToast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.suspendCoroutine
 
 
 class JoinAuthFm : Fragment() {
@@ -113,7 +126,7 @@ class JoinAuthFm : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModelCallback()
+        initViewModelCallback() //번호인증초기화
 
         binding.tv.setOnClickListener {
             findNavController().navigate(R.id.action_joinAuthFm_to_joinFm)
@@ -121,8 +134,26 @@ class JoinAuthFm : Fragment() {
 
     }
 
+    /**
+     * 번호 인증 시작용
+     * */
     private fun initViewModelCallback() {
         with(loginVm) {
+
+            // 입력한 폰번호를 서버에서 중복체크
+            val phoneNumberWatcher: TextWatcher = object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        binding.joinAuthCompleteBt.isEnabled = validatePhoneNumber()
+                    }
+                }
+            }
+            binding.joinPhoneNumberEt.addTextChangedListener(phoneNumberWatcher)
+
+
+
             // 인증번호 요청 클릭
             binding.joinPhoneVerifyBt.setOnClickListener {
                 //첫요청
@@ -160,6 +191,8 @@ class JoinAuthFm : Fragment() {
                 })
 
             }
+
+
 
             // 인증완료 버튼 클릭 시
             binding.joinAuthCompleteBt.setOnClickListener {
@@ -264,6 +297,55 @@ class JoinAuthFm : Fragment() {
 
 
 
+
+
+    /**
+     * 회원가입시 이메일,패스워드 등등의 형식 맞는지 검사 후 textInputLayout 에 오류유무 보여주기
+     */
+    private suspend fun validatePhoneNumber(): Boolean {
+        val value = java.lang.String.valueOf(binding.joinPhoneNumberEt.text)
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        return if (value.isEmpty()) {
+            binding.joinPhoneTextlayout.error = "휴대폰 번호를 입력해주세요."
+            false
+        } /*else if (!value.matches(Regex(emailPattern))) {
+            binding.joinEmailTextlayout.error = "이메일 형식이 맞지 않습니다."
+            false
+        }*/ else {
+            //통신해서 중복유무 체크해야함.
+            var result = false
+            suspendCoroutine { cont: Continuation<Unit> ->
+
+                Http.getRetrofitInstance(Http.HOST_IP)!!.create(Http.HttpLogin::class.java).isPhoneNumberRedundant(value)!!
+                    .enqueue(object : Callback<JsonObject?> {
+                        override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
+                            Log.e(tagName, "isEmailRedundant onResponse: 통신성공, code는: " + response.code())
+                            if (response.isSuccessful) {
+                                val res = response.body()
+                                Log.e(tagName, "isEmailRedundant onResponse: 통신성공, body는: " + res.toString())
+                                if (res!!["res"].asBoolean) {
+                                    Toast.makeText(activity, res["res"].asString, Toast.LENGTH_SHORT).show()
+//                                NavHostFragment.findNavController(this@JoinFm).navigate(R.id.action_global_homeFm)
+//                                Toast.makeText(activity, "이미 존재하는 Email 입니다.", Toast.LENGTH_SHORT).show()
+                                    binding.joinPhoneTextlayout.error = "사용중인 번호 입니다."
+                                } else {
+                                    Toast.makeText(activity, "사용가능한 번호 입니다.", Toast.LENGTH_SHORT).show()
+                                    binding.joinPhoneTextlayout.error = null
+                                    result = true
+                                }
+                            }
+                            cont.resumeWith(Result.success(Unit))
+                        }
+
+                        override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                            Log.e(tagName, "isEmailRedundant onFailure: " + t.message)
+                        }
+                    })
+
+            }
+            result //비동기 통신 결과 성공시 r은 true를 반환함
+        }
+    }
 
 
 }

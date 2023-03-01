@@ -2,6 +2,7 @@ package com.tappcli.tr
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ProgressDialog.show
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -44,6 +45,7 @@ import com.tappcli.databinding.ResultFmBinding
 import com.tappcli.util.ContextMenuLoad
 import com.tappcli.util.LanguagePack
 import com.tappcli.util.PermissionHelper
+import gun0912.tedimagepicker.util.ToastUtil.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -53,10 +55,10 @@ import kotlinx.coroutines.launch
 class ResultFm : Fragment() {
     val tagName = "[ResultFm]"
     lateinit var homeVm: HomeVm
-    var appBarConfiguration: AppBarConfiguration? = null
-    private var navController: NavController? = null
+//    var appBarConfiguration: AppBarConfiguration? = null
+//    private var navController: NavController? = null
 
-    lateinit var rv: RecyclerView
+//    lateinit var rv: RecyclerView
 //    lateinit var rva: HomeFmImgRva
 //    lateinit var imgVpa: HomeFmImgVpa
 
@@ -145,7 +147,7 @@ class ResultFm : Fragment() {
 //            navController!!,
 //            appBarConfiguration!!
 //        )
-
+        Log.e(tagName, "onViewCreated")
 
 
         //뒤로가기 버튼 클릭시 뒤로
@@ -170,21 +172,40 @@ class ResultFm : Fragment() {
 
         //한영 전환 버튼(타이틀바) 클릭시
         binding.changeIv.setOnClickListener {
-            if(homeVm.liveCurrentTranslateMode.value == "한영"){
-                homeVm.liveCurrentTranslateMode.value = "영한"
-            }else{
-                homeVm.liveCurrentTranslateMode.value = "한영"
+            val 이전변수2의값 = homeVm.liveCurrentLangEnd.value
+            homeVm.liveCurrentLangEnd.value = homeVm.liveCurrentLangStart.value
+            homeVm.liveCurrentLangStart.value = 이전변수2의값
+        }
+
+
+
+        //언어 선택 버튼 클릭시
+        binding.toolbarTv.setOnClickListener {
+            LangPopUpMenu(homeVm, requireActivity(), it, R.menu.lang_select_menu).run {
+                팝업메뉴("start")
+                show()
+                Log.e(tagName, "start")
             }
         }
-        homeVm.liveCurrentTranslateMode.observe(viewLifecycleOwner, Observer {
-            if(it == "한영"){
-                binding.toolbarTv.text = "한국어"
-                binding.toolbarTv2.text = "영어"
-            }else{
-                binding.toolbarTv.text = "영어"
-                binding.toolbarTv2.text = "한국어"
+        binding.toolbarTv2.setOnClickListener {
+            Log.e(tagName, "end")
+            LangPopUpMenu(homeVm, requireActivity(), it, R.menu.lang_select_menu).run {
+                팝업메뉴("end")
+                show()
             }
-        })
+        }
+
+
+        //언어 선택에 따라 번역될 언어에 맞는 UI 명으로 변경
+        homeVm.liveCurrentLangStart.observe(viewLifecycleOwner){
+            binding.toolbarTv.text = it[1]
+        }
+        homeVm.liveCurrentLangEnd.observe(viewLifecycleOwner){
+            binding.toolbarTv2.text = it[1]
+        }
+
+
+
 
         //버튼에 따른 차이는 아닌것으로 판명됨. - 첫클릭에 버튼클릭이 안먹히는 증상이 있음.
 //        binding.ib2.setOnClickListener {
@@ -198,7 +219,8 @@ class ResultFm : Fragment() {
         // TTS 버튼(스피커아이콘) 클릭시 result_tv안의 내용 말하기
         val tts = TTS(requireContext())
         binding.fab.setOnClickListener {
-            tts.mainFn(binding.resultTv.text.toString())
+            Log.e(tagName, "homeVm.liveCurrentLangEnd.value!![0]: ${homeVm.liveCurrentLangEnd.value!![0]}")
+            tts.mainFn(binding.resultTv.text.toString(), homeVm.liveCurrentLangEnd.value!![0])
         }
 
         // OCR img 버튼 클릭시
@@ -240,15 +262,15 @@ class ResultFm : Fragment() {
 
                     // do our magic
 //                    Toast.makeText(requireActivity(),"watch active",Toast.LENGTH_SHORT).show()
-                    var 타겟언어코드 : String = "en"
-                    var 원본언어코드 : String = "ko"
-                    if(homeVm.liveCurrentTranslateMode.value == "한영"){
-                        타겟언어코드 = "en"
-                        원본언어코드 = "ko"
-                    }else{
-                        타겟언어코드 = "ko"
-                        원본언어코드 = "en"
-                    }
+                    val 원본언어코드 = homeVm.liveCurrentLangStart.value!![0]
+                    val 타겟언어코드 = homeVm.liveCurrentLangEnd.value!![0]
+//                    if(homeVm.liveCurrentTranslateMode.value == "한영"){
+//                        타겟언어코드 = "en"
+//                        원본언어코드 = "ko"
+//                    }else{
+//                        타겟언어코드 = "ko"
+//                        원본언어코드 = "en"
+//                    }
 
                     if(arguments?.get("signal1").toString() == "${MyApp.히스토리_및_즐겨찾기에서_왔음}"){
                         gApi.translate(타겟언어코드, 원본언어코드, MyApp.히스토리_및_즐겨찾기에서_왔음)
@@ -372,11 +394,7 @@ class ResultFm : Fragment() {
                         Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
                             .putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, requireActivity().packageName)
                             .apply {
-                                if(homeVm.liveCurrentTranslateMode.value == "한영"){
-                                    putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR") // 한국어 설정 or en-US
-                                }else{
-                                    putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US") // 한국어 설정 or en-US
-                                }
+                                putExtra(RecognizerIntent.EXTRA_LANGUAGE, homeVm.liveCurrentLangStart.value!![2]) // 한국어 설정 or en-US
                             }
                     )
 //                 Toast.makeText(requireActivity(),"onon5",Toast.LENGTH_SHORT).show()

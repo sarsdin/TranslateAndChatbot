@@ -35,15 +35,29 @@
                 app:tint="#494949" />
             <!--                android:padding="10dp"-->
 
-            <com.google.android.material.textview.MaterialTextView
+<!--            <Button-->
+<!--                android:id="@+id/toolbar_tv"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:clickable="true"-->
+<!--                android:fontFamily="monospace"-->
+<!--                android:text="한국어"-->
+<!--                android:textColor="#4E4E4E"-->
+<!--                android:textSize="20sp" />-->
+            <Button
                 android:id="@+id/toolbar_tv"
+                style="@android:style/Widget.Holo.Light.Button.Borderless.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:fontFamily="monospace"
+                android:insetBottom="2dp"
+                android:minHeight="0dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
                 android:text="한국어"
-                android:textColor="#4E4E4E"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textColor="#4E4E4E" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv"
@@ -76,15 +90,30 @@
             <!--                android:background="#FFFFFF"-->
             <!--                android:src="@drawable/ic_baseline_compare_arrows_24" />-->
 
-            <com.google.android.material.textview.MaterialTextView
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/toolbar_tv2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:clickable="true"-->
+<!--                android:fontFamily="monospace"-->
+<!--                android:text="영어"-->
+<!--                android:textColor="#4E4E4E"-->
+<!--                android:textSize="20sp" />-->
+            <Button
                 android:id="@+id/toolbar_tv2"
+                style="@android:style/Widget.Holo.Light.Button.Borderless.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:fontFamily="monospace"
+                android:insetBottom="2dp"
+                android:minHeight="0dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
                 android:text="영어"
-                android:textColor="#4E4E4E"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textColor="#4E4E4E" />
+
 
             <!--            <ImageButton-->
             <!--                android:id="@+id/toolbar_write_bt"-->

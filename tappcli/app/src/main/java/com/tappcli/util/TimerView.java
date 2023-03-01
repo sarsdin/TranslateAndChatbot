@@ -18,7 +18,8 @@ public class TimerView extends MaterialTextView {
     private int time;
 
     //인증가능한 시간제한안인지 여부
-    private boolean certification = false;
+    //사실 certification 변수는 이제 mCertification 으로 대체되서 필요가 없다.
+//    private boolean certification = false;
 
     public TimerView(Context context ) {
         super( context );
@@ -29,37 +30,37 @@ public class TimerView extends MaterialTextView {
     }
 
     public void start( int durationTime ) {
-        setTime( durationTime );
-        setCertification( true );
         mCertification.setValue(true);
+        setTime( durationTime );
+//        setCertification( true );
         animator = ObjectAnimator.ofInt( this, "time", 0 );
         animator.setDuration( durationTime );
         animator.setInterpolator( new LinearInterpolator( ) );
         animator.start( );
     }
 
-    public void stop( ) {
-        animator.cancel( );
-        setTime( 0 );
-        setCertification( false );
-        mCertification.setValue(false);
-    }
+//    public void stop( ) {
+//        animator.cancel( );
+//        setTime( 0 );
+//        setCertification( false );
+//        mCertification.setValue(false);
+//    }
     public void setDefault( ) {
         if(animator != null){
             animator.cancel();
         }
         setTime( 0 );
-        setCertification( false );
+//        setCertification( false );
         mCertification.setValue(false);
     }
 
-    public boolean isCertification( ) {
-        return certification;
-    }
+//    public boolean isCertification( ) {
+//        return certification;
+//    }
 
-    private void setCertification( boolean certification ) {
-        this.certification = certification;
-    }
+//    private void setCertification( boolean certification ) {
+//        this.certification = certification;
+//    }
 
     public int getTime( ) {
         return time;
@@ -84,7 +85,7 @@ public class TimerView extends MaterialTextView {
         this.setText( mm + ":" + ss );
 
         if ( this.time == 0 ) {
-            setCertification( false );
+//            setCertification( false ); //사실 certification 변수는 이제 mCertification 으로 대체되서 필요가 없다.
             mCertification.setValue(false);
         }
     }

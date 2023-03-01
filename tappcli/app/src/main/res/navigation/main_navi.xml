@@ -100,8 +100,26 @@
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <fragment
-        android:id="@+id/joinFindPwFm"
-        android:name="com.tappcli.login.JoinFindPwFm"
+        android:id="@+id/loginFindPwFm"
+        android:name="com.tappcli.login.LoginFindPwFm"
         android:label="JoinFindPwFm"
-        tools:layout="@layout/login_join_fm"/>
+        tools:layout="@layout/login_find_pw_fm"/>
+    <fragment
+        android:id="@+id/loginFindIdFm"
+        android:name="com.tappcli.login.LoginFindIdFm"
+        android:label="LoginFindIdFm"
+        tools:layout="@layout/login_find_id_fm"/>
+    <fragment
+        android:id="@+id/loginFindInfoFm"
+        android:name="com.tappcli.login.LoginFindInfoFm"
+        android:label="LoginFindInfoFm"
+        tools:layout="@layout/login_find_info_fm"/>
+
+    <action android:id="@+id/action_global_joinFindPwFm"
+        app:destination="@id/loginFindPwFm"/>
+    <action android:id="@+id/action_global_loginFindInfoFm"
+        app:destination="@id/loginFindInfoFm"/>
+    <action android:id="@+id/action_global_loginFindIdFm"
+        app:destination="@id/loginFindIdFm"/>
+
 </navigation>

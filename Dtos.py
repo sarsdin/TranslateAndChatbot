@@ -2,6 +2,7 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from datetime import datetime
 
+
 class Item(BaseModel):
     # content: List[str]
     user_input: str
@@ -27,14 +28,18 @@ class HistoryBase(BaseModel):
     # user_nick: str = None
     # history_content: str = None
 
+
 class HistoryCreate(HistoryBase):
     pass
+
 
 class HistoryUpdate(HistoryBase):
     pass
 
+
 class HistoryOrm(HistoryBase):
     history_no: int = None
+
     # history_create_date: datetime = None
 
     class Config:
@@ -43,14 +48,17 @@ class HistoryOrm(HistoryBase):
 
 # 사용자 모델 피덴틱모델
 class UserBase(BaseModel):
+    user_phone: str
     user_email: str
     user_name: str
     user_nick: str
     user_pwd: str
     user_image: str = None
 
+
 class UserCreate(UserBase):
     pass
+
 
 class UserOrm(UserBase):
     user_no: int
@@ -59,6 +67,38 @@ class UserOrm(UserBase):
     class Config:
         orm_mode = True
 
+
+class LoginNewPw(BaseModel):
+    user_email: str
+    user_pwd: str
+
+    class Config:
+        orm_mode = True
+
+
 class UserLogin(BaseModel):
     user_email: str
     user_pwd: str
+
+
+class LoginFindId(BaseModel):
+    user_phone: str
+    user_name: str
+
+
+class LoginFindPw(BaseModel):
+    user_email: str
+    user_name: Optional[str] = None
+    vnum: Optional[str] = None
+    expire_time: Optional[datetime] = None
+
+
+# email 번호 검증 모델
+class EmailNumber(BaseModel):
+    user_email: str
+    user_name: str
+    vnum: str
+    expire_time: datetime
+
+    class Config:
+        orm_mode = True

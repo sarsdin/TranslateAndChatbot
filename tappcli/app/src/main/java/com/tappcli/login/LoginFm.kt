@@ -98,7 +98,7 @@ class LoginFm : Fragment() {
 
         //비밀번호 찾기 버튼 클릭
         binding.loginFindpwBt.setOnClickListener {
-//            findNavController().navigate(R.id.action_loginFm_to_)
+            findNavController().navigate(R.id.action_global_loginFindInfoFm)
         }
 
         //cheat login
@@ -159,6 +159,9 @@ class LoginFm : Fragment() {
         super.onResume()
         //로그인 페이지에서는 히스토리 바텀시트 안보이기
         (requireActivity() as MainActivity).binding.includeLayout.root.visibility = View.GONE
+
+        binding.loginMainEmailLayout.error = null
+        binding.loginMainPwdLayout.error = null
     }
 
 

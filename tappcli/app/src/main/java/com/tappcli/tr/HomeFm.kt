@@ -123,31 +123,10 @@ class HomeFm : Fragment() {
         }
     }
 
-    //unsplash picker Activity 를 열었던 결과를 콜백받음.
-//    val unsplashForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
-//        val resultCode = result.resultCode
-//        val data = result.data
-//
-//        if(resultCode == Activity.RESULT_OK){
-//            val photos : ArrayList<UnsplashPhoto>? = data?.getParcelableArrayListExtra(
-//                UnsplashPickerActivity.EXTRA_PHOTOS)
-//            if (photos != null) {
-//                homeVm.unsplashL = photos
-//                homeVm.liveUnsplashL.value = homeVm.unsplashL
-//            }
-//        }
-//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleOnBackPressed() //뒤로가기 종료 구현부
-//        appBarConfiguration = AppBarConfiguration.Builder(R.id.home_fm).build()
-//        navController = Navigation.findNavController(view)
-//        NavigationUI.setupWithNavController(
-//            binding.homeToolbar,
-//            navController!!,
-//            appBarConfiguration!!
-//        )
 
 
         //사이드 드로뷰 열기
@@ -172,23 +151,48 @@ class HomeFm : Fragment() {
 
         //change_iv 한영 전환 버튼
         binding.changeIv.setOnClickListener{
-            if (homeVm.liveCurrentTranslateMode.value == "한영") {
-//                homeVm.currentTranslateMode = "영한"
-                homeVm.liveCurrentTranslateMode.value = "영한"
-            } else {
-//                homeVm.currentTranslateMode = "한영"
-                homeVm.liveCurrentTranslateMode.value = "한영"
+            val 이전변수2의값 = homeVm.liveCurrentLangEnd.value
+            homeVm.liveCurrentLangEnd.value = homeVm.liveCurrentLangStart.value
+            homeVm.liveCurrentLangStart.value = 이전변수2의값
+        }
+//        homeVm.liveCurrentTranslateMode.observe(viewLifecycleOwner, Observer {
+//            if(it == "한영"){
+//                binding.bt1.text = "한국어"
+//                binding.bt2.text = "영어"
+//            }else{
+//                binding.bt1.text = "영어"
+//                binding.bt2.text = "한국어"
+//            }
+//        })
+
+
+
+        //언어 선택 버튼 클릭시
+        binding.bt1.setOnClickListener {
+            LangPopUpMenu(homeVm, requireActivity(), it, R.menu.lang_select_menu).run {
+                팝업메뉴("start")
+                show()
+                Log.e(tagName, "start")
             }
         }
-        homeVm.liveCurrentTranslateMode.observe(viewLifecycleOwner, Observer {
-            if(it == "한영"){
-                binding.bt1.text = "한국어"
-                binding.bt2.text = "영어"
-            }else{
-                binding.bt1.text = "영어"
-                binding.bt2.text = "한국어"
+        binding.bt2.setOnClickListener {
+            Log.e(tagName, "end")
+            LangPopUpMenu(homeVm, requireActivity(), it, R.menu.lang_select_menu).run {
+                팝업메뉴("end")
+                show()
             }
-        })
+        }
+
+
+        //언어 선택에 따라 번역될 언어에 맞는 UI 명으로 변경
+        homeVm.liveCurrentLangStart.observe(viewLifecycleOwner){
+            binding.bt1.text = it[1]
+        }
+        homeVm.liveCurrentLangEnd.observe(viewLifecycleOwner){
+            binding.bt2.text = it[1]
+        }
+
+
 
 
 

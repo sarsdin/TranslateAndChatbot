@@ -82,7 +82,6 @@ object Http {
     interface Translate {
 
 
-
         @POST("historyDelete")
         fun 히스토리삭제(@Body user_no: String?, @Body history_no: String?): Call<JsonObject?>?
 
@@ -98,338 +97,63 @@ object Http {
     interface HttpLogin {
         // 이메일 중복확인 통신
         @GET("joinEmailVerify/{user_email}")
-        fun isEmailRedundant(/*@Query*/@Path("user_email") user_email: String?): Call<JsonObject?>?
+        fun isEmailRedundant(@Path("user_email") user_email: String?): Call<JsonObject?>?
+
+        // 폰번호 중복확인 통신
+        @GET("joinPhoneNumberVerify/{user_phone}")
+        fun isPhoneNumberRedundant(@Path("user_phone") user_phone: String?): Call<JsonObject?>?
 
         //회원가입 버튼 클릭시 - 신청
         @POST("joinComplete")
-        fun joinComplete(@Body joinInfo: HashMap<String, String>
-//            @Query("user_email") user_email: String?,
-//            @Query("user_pwd") user_pwd: String?,
-//            @Query("user_nick") user_nick: String?,
-//            @Query("user_name") user_name: String?,
-//            @Query("user_pwdc") user_pwdc: String?,
-        ): Call<JsonObject?>?
-
-        //비번찾기 이메일 인증번호 발송 버튼 클릭시 -
-        @GET("home/findpwMailSend")
-        fun findpwMailSend(
-            @Query("user_name") user_name: String?,
-            @Query("user_email") user_email: String?
-        ): Call<JsonObject?>?
-
-        //비번찾기 인증번호 확인 버튼 클릭시
-        @GET("home/findpwMailVnumConfirm")
-        fun findpwMailVnumConfirm(
-            @Query("findpw_number") findpw_number: String?,
-            @Query("name") name: String?,
-            @Query("email") email: String?
-        ): Call<JsonObject?>?
-
-        //새 비밀번호 설정 완료 버튼 클릭시
-        @GET("home/findpwNewPw")
-        fun findpwNewPw(
-            @Query("user_email") user_email: String?,
-            @Query("user_pwd") user_pwd: String?
+        fun joinComplete(
+            @Body joinInfo: HashMap<String, String>
         ): Call<JsonObject?>?
 
         //로그인 버튼 클릭시
         @POST("/login")
         fun login(
             @Body loginInfo: HashMap<String, String>
-        ) : Call<JsonObject?>?
+        ): Call<JsonObject?>?
 
+        // 기록가져오기
         @POST("/history")
         fun history(
             @Body info: HashMap<String, String>
-        ) : Call<JsonObject?>?
-
-        @POST("/historyGet")
-        fun historyGet(
-            @Body info: HashMap<String, String>
-        ) : Call<JsonObject?>?
-
-
-
-
-
-
-//        Call<LoginDto> login(@Query("user_email") String user_email,
-//                             @Query("user_pwd") String user_pwd,
-//                             @Query("user_autologin") Boolean user_autologin
-//        );
-        //자동로그인시 쉐어드에 유저정보가 있으면 서버에서 그 유저 정보 불러오면서 자동로그인하기
-        //        @GET("home/getAutoLoginInfo")
-        //        Call<LoginDto> getAutoLoginInfo(@Query("user_email") String user_email);
-        @Multipart
-        @POST("home/userProfileImageSelect")
-        fun 사용자이미지선택(
-            @PartMap userInfo: Map<String?, RequestBody?>?,
-            @Part userImage: Part?
         ): Call<JsonObject?>?
 
-        @POST("home/nickModify")
-        fun 유저닉네임수정(
-            @Query("user_no") user_no: Int,
-            @Query("user_nick") user_nick: String?
+//        @POST("/historyGet")
+//        fun historyGet(
+//            @Body info: HashMap<String, String>
+//        ): Call<JsonObject?>?
+
+        //아이디 찾기
+        @POST("/findId")
+        fun findId(
+            @Body info: Map<String, String>
         ): Call<JsonObject?>?
+
+        //이메일 번호발송 요청
+        @POST("/emailVnumReq")
+        fun emailVnumReq(
+            @Body info: Map<String, String>
+        ): Call<JsonObject?>?
+
+        //이메일 번호인증
+        @POST("/vnum")
+        fun 번호확인인증(
+            @Body vnum: Map<String, String>
+        ): Call<JsonObject?>?
+
+
+        @POST("/newPasswd")
+        fun 새비밀번호요청(
+            @Body info: Map<String, String>
+        ): Call<JsonObject?>?
+
+
     }
 
 
 
-    interface HttpHome {
-        //성경일독
-        @GET("bible/getTodayLang")
-        fun 성경일독(): Call<JsonObject?>?
 
-        //Unsplash Api 랜덤 이미지 10장
-        @Headers(
-            "Authorization: Client-ID yEG1lot43cUerBQv3RUNkymPmzAMrXiSxV1mkUGj5JQ",
-            "content-type: application/json"
-        )
-        @GET("/photos/random")
-        fun 랜덤이미지( @Header("token") token: String?, @Query("query") query: String?, @Query("count") count: Int): Call<JsonArray?>?
-    }
-
-    interface HttpBible {
-        //유저 노트 목록 가져오기
-        //        @Headers("content-type: application/json")
-        @GET("bible/getNoteList")
-        fun getNoteList(@Query("user_no") user_no: Int): Call<JsonArray?>?
-
-        //유저 노트 추가
-        @Headers("content-type: application/json")
-        @POST("bible/getNoteAdd")
-        fun getNoteAdd(@Body noteinfo: JsonObject?): Call<JsonObject?>?
-
-        //유저 노트 수정
-        @Headers("content-type: application/json")
-        @POST("bible/getNoteUpdate")
-        fun getNoteUpdate(@Body noteinfo: JsonObject?): Call<JsonObject?>?
-
-        //유저 노트 삭제
-        @Headers("content-type: application/json")
-        @POST("bible/deleteNote")
-        fun deleteNote(@Query("note_no") note_no: Int): Call<JsonObject?>?
-    }
-
-    interface HttpGroup {
-        //모임 만들기
-        @Multipart
-        @POST("group/createGroup")
-        fun createGroup(
-            @PartMap groupInfo: Map<String?, RequestBody?>?,
-            @Part groupImage: Part?
-        ): Call<JsonObject?>?
-
-        @Multipart
-        @POST("group/groupProfileImageSelect")
-        fun 모임이미지선택(
-            @PartMap groupInfo: Map<String?, RequestBody?>?,
-            @Part groupImage: Part?
-        ): Call<JsonObject?>?
-
-        //모임 목록 가져오기
-        @Headers("content-type: application/json")
-        @POST("group/getGroupL")
-        fun getGroupL(
-            @Query("user_no") userNo: Int,
-            @Query("sortState") sortState: String?
-        ): Call<JsonObject?>?
-
-        //모임 상세 가져오기
-        @Headers("content-type: application/json")
-        @POST("group/getGroupIn")
-        fun getGroupIn(
-            @Query("group_no") currentGroupIn: Int,
-            @Query("sortStateGroupIn") sortStateGroupIn: String?,
-            @Query("user_no") userNo: Int
-        ): Call<JsonObject?>?
-
-        //모임 게시물 목록 가져오기
-        @Headers("content-type: application/json")
-        @POST("group/getGroupInL")
-        fun getGroupInL(
-            @Query("group_no") currentGroupIn: Int,
-            @Query("sortStateGroupIn") sortStateGroupIn: String?
-        ): Call<JsonObject?>?
-
-        //모임 글쓰기
-        @Multipart
-        @POST("group/writeGroupIn")
-        fun writeGroupIn(
-            @PartMap writeInfo: Map<String?, RequestBody?>?,
-            @Part writeImage: List<Part?>?
-        ): Call<JsonObject?>?
-
-        //모임 글수정
-        @Multipart
-        @POST("group/updateBoardGroupIn")
-        fun updateBoardGroupIn(
-            @PartMap updateInfo: Map<String?, RequestBody?>?,
-            @Part updateImage: List<Part?>?
-        ): Call<JsonObject?>?
-
-        //모임 글삭제
-        @Headers("content-type: application/json")
-        @POST("group/deleteBoardGroupIn")
-        fun deleteBoardGroupIn(
-            @Query("gboard_no") gboard_no: Int,
-            @Query("user_no") user_no: Int
-        ): Call<JsonObject?>?
-
-        //모임 글 상세 가져오기
-        @Headers("content-type: application/json")
-        @POST("group/getGboardDetail")
-        fun getGboardDetail(
-            @Query("gboard_no") gboard_no: Int,
-            @Query("whereIs") whereIs: String?,
-            @Query("user_no") userNo: Int
-        ): Call<JsonObject?>?
-
-        //모임 댓글 쓰기
-        @Headers("content-type: application/json")
-        @POST("group/writeGboardReply")
-        fun writeGboardReply(@Body replyInfo: JsonObject?): Call<JsonObject?>?
-
-        //모임 댓글 삭제
-        @Headers("content-type: application/json")
-        @POST("group/deleteGboardReply")
-        fun deleteGboardReply(@Body replyInfo: JsonObject?): Call<JsonObject?>?
-
-        //모임 댓글 수정
-        @Headers("content-type: application/json")
-        @POST("group/modifyGboardReply")
-        fun modifyGboardReply(@Body replyInfo: JsonObject?): Call<JsonObject?>?
-
-        //모임 좋아요 클릭 - insert or delete
-        @Headers("content-type: application/json")
-        @POST("group/clickGboardLike")
-        fun clickGboardLike(
-            @Query("gboard_no") gboard_no: Int,
-            @Query("user_no") user_no: Int
-        ): Call<JsonObject?>?
-
-        //챌린지만들기총분량수계산
-        @Headers("content-type: application/json")
-        @POST("group/getCountVerseForChalCreate")
-        fun 챌린지만들기총분량수계산(@Body params: JsonArray?): Call<JsonObject?>?
-
-        //챌린지만들기완료하기
-        @Headers("content-type: application/json")
-        @POST("group/createChallenge")
-        fun 챌린지만들기완료하기(@Body params: JsonObject?): Call<JsonObject?>?
-
-        //챌린지목록가져오기
-        @Headers("content-type: application/json")
-        @POST("group/getChallengeList")
-        fun 챌린지목록가져오기(
-            @Query("user_no") user_no: Int,
-            @Query("group_no") group_no: Int
-        ): Call<JsonObject?>?
-
-        //챌린지상세목록가져오기
-        @Headers("content-type: application/json")
-        @POST("group/getChallengeDetailList")
-        fun 챌린지상세목록가져오기(
-            @Query("chal_no") chal_no: Int,
-            @Query("user_no") user_no: Int,
-            @Query("group_no") group_no: Int
-        ): Call<JsonObject?>?
-
-        @Headers("content-type: application/json")
-        @POST("group/getChallengeDetailVerseList")
-        fun 챌린지인증진행하기(@Body params: JsonObject?): Call<JsonObject?>?
-
-        @Headers("content-type: application/json")
-        @POST("group/updateChallengeDetailVerse")
-        fun 챌린지인증체크업데이트(@Body params: JsonObject?): Call<JsonObject?>?
-
-        @Multipart
-        @POST("group/createChalDetailVideo")
-        fun 챌린지인증영상업로드(
-            @PartMap groupInfo: Map<String?, RequestBody?>?,
-            @Part groupImage: Part?
-        ): Call<JsonObject?>?
-
-        @POST("group/createChalDetailVideoFirstWork")
-        fun 챌린지인증영상업로드사전작업(@Query("chal_detail_no") chal_detail_no: Int): Call<JsonObject?>?
-
-        @POST("group/chalLikeClicked")
-        fun 챌린지상세좋아요클릭(@Body params: JsonObject?): Call<JsonObject?>?
-
-        //////////////모임 초대 관련
-        @POST("group/isInviteNumber")
-        fun 모임초대번호있는지확인(@Body params: JsonObject?): Call<JsonObject?>?
-
-        @POST("group/memberInviteNumber")
-        fun 모임초대번호재생성요청(@Body params: JsonObject?): Call<JsonObject?>?
-
-        @POST("group/memberInviteLink")
-        fun 모임초대링크생성(@Body params: JsonObject?): Call<JsonObject?>?
-
-        @POST("group/memberInviteLinkConfirm")
-        fun 모임초대링크유효한지확인(
-            @Query("group_no") group_no: Int,
-            @Query("invite_code") invite_code: String?,
-            @Query("user_no") user_no: Int
-        ): Call<JsonObject?>?
-
-        @POST("group/memberInviteLinkMemberAdd")
-        fun 모임초대링크로멤버추가하기(
-            @Query("group_no") group_no: Int,
-            @Query("invite_code") invite_code: String?,
-            @Query("user_no") user_no: Int
-        ): Call<JsonObject?>?
-
-        @POST("group/memberInviteNumberMemberAdd")
-        fun 모임초대번호로멤버추가하기( /*@Query("group_no") int group_no,*/
-            @Query("invite_code") invite_code: String?,
-            @Query("user_no") user_no: Int
-        ): Call<JsonObject?>?
-
-        @POST("group/memberInviteNumberVerify")
-        fun 모임초대번호로멤버추가하기전유효성확인( /*@Query("group_no") int group_no,*/
-            @Query("invite_code") invite_code: String?,
-            @Query("user_no") user_no: Int
-        ): Call<JsonObject?>?
-
-        @POST("group/memberListLoad")
-        fun 모임멤버목록로드(@Body params: JsonObject?): Call<JsonObject?>?
-
-        @POST("group/memberOut")
-        fun 모임멤버탈퇴(@Body params: JsonObject?): Call<JsonObject?>?
-
-        @POST("group/memberFire")
-        fun 모임멤버추방(@Body params: JsonObject?): Call<JsonObject?>?
-
-        @POST("group/memberListSearch")
-        fun 모임멤버검색(@Body params: JsonObject?): Call<JsonObject?>?
-
-        //채팅방 만들기 - 만들기 후 채팅방 정보+참가자목록 가져옴
-        @Multipart
-        @POST("group/chatRoomCreate")
-        fun 채팅방만들기(
-            @PartMap chatRoomInfo: Map<String?, RequestBody?>?,
-            @Part chatRoomImage: Part?
-        ): Call<JsonObject?>?
-
-        //채팅방 목록 가져오기
-        @POST("group/chatRoomList")
-        fun 채팅방목록(@Body params: JsonObject?): Call<JsonObject?>?
-
-        //채팅방 정보 및 채팅 내역 가져오기 - 채팅방 정보+참가자목록, 채팅 내역 목록+채팅쓴사람
-        @POST("group/chatRoomJoin")
-        fun 채팅방참가클릭(
-            @Query("chat_room_no") chat_room_no: Int,
-            @Query("user_no") user_no: Int,
-            @Query("group_no") group_no: Int
-        ): Call<JsonObject?>?
-
-        @Multipart
-        @POST("group/chatRoomUploadImages")
-        fun 채팅방이미지업로드클릭(
-            @PartMap chatInfo: Map<String?, RequestBody?>?,
-            @Part uploadImages: List<Part?>?
-        ): Call<JsonObject?>?
-    }
 }

@@ -24,7 +24,7 @@ app.include_router(api_router)
 # chat.gptStart()
 
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    print('PyCharm')
 
 
 

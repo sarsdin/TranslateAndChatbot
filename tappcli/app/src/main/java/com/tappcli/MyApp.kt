@@ -1,12 +1,21 @@
 package com.tappcli
+import android.util.Log
 
 import android.app.Application
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 //import android.preference.PreferenceManager
 import androidx.preference.PreferenceManager
 import com.google.firebase.auth.UserInfo
+import gun0912.tedimagepicker.util.ToastUtil.context
 import java.io.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -91,6 +100,39 @@ class MyApp : Application() {
         @JvmName("setSp1")
         fun setSp(sp: SharedPreferences?) {
             Companion.sp = sp
+        }
+
+
+        /**
+         * 클립보드 복사 유틸 - mode = 'textview' or any
+         * */
+        fun clipBoard(activity: FragmentActivity, mode:String?, tv: TextView? = null, args: String = "") {
+            if(mode == "textview"){
+                val clipboardManager: ClipboardManager? = activity.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
+                val clipData = ClipData.newPlainText("ssID", tv?.text) //클립보드에 ID라는 이름표로 id 값을 복사하여 저장
+                clipboardManager?.setPrimaryClip(clipData)
+
+            }else{
+                val clipboardManager: ClipboardManager? = application.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
+                val clipData = ClipData.newPlainText("ssID", args) //클립보드에 ID라는 이름표로 id 값을 복사하여 저장
+                Log.e("MyApp", "args: $args")
+                clipboardManager?.setPrimaryClip(clipData)
+
+            }
+        }
+
+        /**
+        * 소프트 키보드 내리기 유틸
+        * */
+        fun hideKeyboard(activity: FragmentActivity){
+            val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(activity.currentFocus?.windowToken, 0)
+        }
+        fun showKeyboard(activity: FragmentActivity, view: View){
+            view.requestFocus()
+            val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//                imm.showSoftInput(binding.et, 0) //직접 뷰를 설정해서 보이는 방법
+            imm.showSoftInput(activity.currentFocus, 0) //현재 포커싱된 뷰를 여는 방법
         }
 
         fun getTime(ui표시orData: String, datetime: String?): String {

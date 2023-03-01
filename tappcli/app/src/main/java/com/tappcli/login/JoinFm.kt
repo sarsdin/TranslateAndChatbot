@@ -76,6 +76,7 @@ class JoinFm : Fragment() {
         binding.joinCompleteBt.setOnClickListener { v ->
             //todo 레트로핏서버로통신 - 회원정보들 json으로 넘김. - 서버에서 디비로 정보insert - 성공유무 정보 반환 - 가입완료하면(토스트띄우고) 로그인화면으로가기
             val infoMap = HashMap<kotlin.String, kotlin.String>()
+            infoMap["user_phone"] = loginVm.tel
             infoMap["user_email"] = binding.joinEmailInput.text.toString()
             infoMap["user_name"] = binding.joinNameInput.text.toString()
             infoMap["user_nick"] = binding.joinNicknameInput.text.toString()
@@ -124,7 +125,6 @@ class JoinFm : Fragment() {
     /**
      * 회원가입 시 형식 유효성 검사를 위한 텍스트 와쳐 생성!
      */
-
     private fun validationCheck() {
 
         // 필수 입력란 모두 충족되는지 관찰하는 옵져버 생성

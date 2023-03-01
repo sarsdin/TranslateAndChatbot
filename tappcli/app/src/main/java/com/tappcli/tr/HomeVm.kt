@@ -14,18 +14,25 @@ class HomeVm : ViewModel() {
     //현재 번역 모드 변수
     var currentTranslateMode = "한영" //기본값 한영으로 설정. <> 영한
     var liveCurrentTranslateMode = MutableLiveData<String>()
+    //선택 언어 변수
+    var liveCurrentLangStart = MutableLiveData<Array<String>>()
+    var liveCurrentLangEnd = MutableLiveData<Array<String>>()
+
+
 
     //번역 버튼의 값
-    var firstBt = "한국어"
-    var liveFirstBt = MutableLiveData<String>()
-    var secondBt = "영어"
-    var liveSecondBt = MutableLiveData<String>()
+//    var firstBt = "한국어"
+//    var liveFirstBt = MutableLiveData<String>()
+//    var secondBt = "영어"
+//    var liveSecondBt = MutableLiveData<String>()
 
     var historyL = JsonArray() //검색이력 목록
     var liveHistoryL = MutableLiveData<JsonArray>()
     var liveFavoriteL = MutableLiveData<JsonArray>()
 
     init {
+        liveCurrentLangStart.value = arrayOf("ko","한국어","ko-KR")
+        liveCurrentLangEnd.value = arrayOf("en","영어", "en-US")
         liveCurrentTranslateMode.value = currentTranslateMode
         liveHistoryL.value = historyL
         liveFavoriteL.value = JsonArray()

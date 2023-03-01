@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+    <item
+        android:id="@+id/ko"
+        android:contentDescription="ko-KR"
+        android:title="한국어"
+        android:titleCondensed="ko"
+        app:showAsAction="always" />
+    <!--        android:visible="false"-->
+
+    <item
+        android:id="@+id/en"
+        android:contentDescription="en-US"
+        android:title="영어"
+        android:titleCondensed="en"
+        app:showAsAction="always" />
+    <!--        android:visible="false"-->
+
+    <item
+        android:id="@+id/fr"
+        android:contentDescription="fr-FR"
+        android:title="프랑스어"
+        android:titleCondensed="fr"
+        app:showAsAction="always" />
+    <!--        android:visible="false"-->
+
+    <item
+        android:id="@+id/de"
+        android:contentDescription="ko-KR"
+        android:title="독일어"
+        android:titleCondensed="de"
+        app:showAsAction="always" />
+    <!--        android:visible="false"-->
+
+    <item
+        android:id="@+id/zh"
+        android:contentDescription="cmn-CN"
+        android:title="중국어"
+        android:titleCondensed="zh"
+        app:showAsAction="always" />
+    <!--        android:visible="false"-->
+
+    <item
+        android:id="@+id/ja"
+        android:contentDescription="ja-JP"
+        android:title="일본어"
+        android:titleCondensed="ja"
+        app:showAsAction="always" />
+    <!--        android:visible="false"-->
+
+    <item
+        android:id="@+id/es"
+        android:contentDescription="es-ES"
+        android:title="스페인어"
+        android:titleCondensed="es"
+        app:showAsAction="always" />
+    <!--        android:visible="false"-->
+
+
+</menu>

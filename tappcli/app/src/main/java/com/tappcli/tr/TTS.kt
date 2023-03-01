@@ -13,12 +13,12 @@ import java.util.*
 
 class TTS(var context: Context) {
 
+    lateinit var langCode: String
+
     private val tts: TextToSpeech by lazy {
         TextToSpeech(context, OnInitListener { status ->
             if (status != TextToSpeech.ERROR) {
-                val result = tts.setLanguage(Locale.ENGLISH) // Locale.KOREAN
-                // 영어로 설정해도 한글을 읽을 수 있고 영어 발음이 한국어로 설정하는것 보다 낫다.
-                Log.e("TTS", "Language set English.")
+                val result = tts.setLanguage(언어설정(langCode)) // Locale.KOREAN
                 if (result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA) {
                     Log.e("TTS", "Language not supported.")
                 }
@@ -27,10 +27,26 @@ class TTS(var context: Context) {
             }
         })
     }
+    fun 언어설정(langCode:String):Locale{
+        Log.e("TTS", "Language set ${langCode}.")
+        val res = when(langCode){
+          "ko" -> {Locale.KOREAN}
+          "en" -> {Locale.ENGLISH}
+          "fr" -> {Locale.FRENCH}
+          "de" -> {Locale.GERMAN}
+          "zh" -> {Locale.CHINESE}
+          "ja" -> {Locale.JAPANESE}
+          "es" -> {Locale("es")}
+          else -> {Locale.ENGLISH}
+        }
+        return res
+    }
 
-    fun mainFn(text: String){
+    fun mainFn(text: String, langCode: String){
+        this.langCode = langCode
         tts.setPitch(1.0f)
         tts.setSpeechRate(1.0f)
+        tts.setLanguage(언어설정(langCode))
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "uid")
 
 //        btn_Speak = findViewById(R.id.btnSpeak);
